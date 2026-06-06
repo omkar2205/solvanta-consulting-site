@@ -983,3 +983,68 @@ select:focus {
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
   .content-page article h2 { font-size: 1.3rem; }
 }
+
+
+/* =========================================================
+About Omkar section
+========================================================= */
+
+.about-omkar { margin-bottom: 40px; }
+
+.about-omkar-inner {
+   display: flex;
+   gap: 28px;
+   align-items: flex-start;
+}
+
+.about-omkar-photo {
+   flex: 0 0 auto;
+}
+
+.about-omkar-photo img {
+   width: 96px;
+   height: 96px;
+   border-radius: 50%;
+   object-fit: cover;
+   border: 2px solid var(--color-border);
+   display: block;
+}
+
+.about-omkar-initials {
+   width: 96px;
+   height: 96px;
+   border-radius: 50%;
+   background: var(--color-soft-strong);
+   color: var(--color-primary-dark);
+   font-family: var(--font-display);
+   font-size: 1.8rem;
+   font-weight: 600;
+   align-items: center;
+   justify-content: center;
+   border: 2px solid var(--color-border);
+}
+
+.about-omkar-body {
+   flex: 1;
+   min-width: 0;
+}
+
+.about-omkar-body p {
+   margin-bottom: 12px;
+   color: var(--color-muted);
+}
+
+.about-omkar-body p:last-of-type {
+   margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+   .about-omkar-inner {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+   }
+   .about-omkar-body .hero-actions {
+      justify-content: center;
+   }
+}
