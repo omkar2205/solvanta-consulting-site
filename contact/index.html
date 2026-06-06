@@ -3,154 +3,175 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>About | Solvanta Consulting</title>
-
-  <meta
-    name="description"
-    content="About Solvanta Consulting, a free learning and certificate platform focused on simple courses, practical exercises, and support when it matters."
-  />
-
+  <title>Contact | Solvanta Learning</title>
+  <meta name="description" content="Contact Solvanta Learning with course enquiries, certificate queries, or general questions." />
   <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
-
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand-link" href="/" aria-label="Solvanta Consulting home">
+      <a class="brand-link" href="/" aria-label="Solvanta Learning home">
         <span class="brand-mark" aria-hidden="true">S</span>
         <span class="brand-text">
-          <span class="brand-name">Solvanta Consulting</span>
+          <span class="brand-name">Solvanta Learning</span>
           <span class="brand-tagline">Simple courses. Practical exercises. Support when it matters.</span>
         </span>
       </a>
-
-      <button
-        class="nav-toggle"
-        type="button"
-        aria-label="Open navigation menu"
-        aria-expanded="false"
-        data-nav-toggle
-      >
+      <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" data-nav-toggle>
         <span aria-hidden="true"></span>
       </button>
-
       <nav class="site-nav" aria-label="Main navigation" data-nav-menu>
         <a href="/">Home</a>
         <a href="/courses/">Courses</a>
-        <a href="/practice/">Practice</a>
-        <a href="/certificates/">Certificates</a>
         <a href="/verify/">Verify</a>
-        <a href="/about/">About</a>
         <a href="/contact/">Contact</a>
       </nav>
     </div>
   </header>
 
   <main id="main-content">
+
     <section class="page-intro">
       <div class="container">
-        <p class="kicker">About</p>
-        <h1>Practical learning support from Solvanta Consulting.</h1>
+        <p class="kicker">Contact</p>
+        <h1>Get in touch with Solvanta Learning.</h1>
         <p class="lead">
-          Solvanta Consulting is being built as a free learning platform focused on
-          simple courses, practical exercises, and verifiable certificates.
+          Use this form for course enquiries, certificate questions, or general support.
+          We aim to respond within two business days.
         </p>
       </div>
     </section>
 
-    <section class="content-page">
+    <section class="section">
       <div class="container-narrow">
-        <article>
-          <h2>Purpose</h2>
-          <p>
-            Solvanta Consulting aims to provide free, practical learning resources for
-            people who want to build everyday professional skills. The focus is on
-            clear explanations, useful exercises, and certificates that can be verified
-            online when issued.
+
+        <article class="card">
+          <h2>Send us a message</h2>
+          <p class="muted">
+            Fields marked with an asterisk (*) are required.
+            Your information is used only to respond to your enquiry.
           </p>
 
-          <h2>What Solvanta Consulting provides</h2>
-          <p>
-            The website is designed around three main areas: courses, practice exercises,
-            and certificate verification. Courses and exercises will be added gradually,
-            with priority given to practical topics such as AI prompting, workplace
-            communication, basic Excel, and interview readiness.
-          </p>
+          <form class="form mt-24" id="contactForm" novalidate>
 
-          <div class="grid grid-auto mt-40">
-            <article class="card">
-              <h3>Simple courses</h3>
-              <p>
-                Short learning resources focused on useful skills rather than unnecessary
-                complexity.
-              </p>
-            </article>
+            <div class="form-row">
+              <label for="contactName">Full name *</label>
+              <input
+                type="text"
+                id="contactName"
+                name="name"
+                placeholder="Your full name"
+                autocomplete="name"
+                required
+              />
+            </div>
 
-            <article class="card">
-              <h3>Practical exercises</h3>
-              <p>
-                Practice tasks designed to help learners apply concepts in realistic,
-                everyday situations.
-              </p>
-            </article>
+            <div class="form-row">
+              <label for="contactEmail">Email address *</label>
+              <input
+                type="email"
+                id="contactEmail"
+                name="email"
+                placeholder="your@email.com"
+                autocomplete="email"
+                required
+              />
+            </div>
 
-            <article class="card">
-              <h3>Verifiable certificates</h3>
-              <p>
-                Certificates issued by Solvanta Consulting may include a unique certificate
-                ID and public verification link.
-              </p>
-            </article>
-          </div>
+            <div class="form-row">
+              <label for="contactPhone">Phone number <span class="form-optional">(optional)</span></label>
+              <input
+                type="tel"
+                id="contactPhone"
+                name="phone"
+                placeholder="Your phone number"
+                autocomplete="tel"
+              />
+            </div>
 
-          <h2>Privacy-first approach</h2>
-          <p>
-            Solvanta Consulting is designed to collect only the information required for
-            the feature being used. The platform does not require user accounts for the
-            current public website. Practice exercises are intended to run without storing
-            user responses, unless a future feature clearly states otherwise.
-          </p>
+            <div class="form-row">
+              <label for="contactCourseInterest">Course interest</label>
+              <select id="contactCourseInterest" name="courseInterest">
+                <option value="">Select a course area (optional)</option>
+                <option value="AI Prompting Basics">AI Prompting Basics</option>
+                <option value="Professional Communication">Professional Communication</option>
+                <option value="Basic Excel Skills">Basic Excel Skills</option>
+                <option value="Interview Readiness">Interview Readiness</option>
+                <option value="Other">Other / General enquiry</option>
+              </select>
+            </div>
 
-          <h2>Certificate position</h2>
-          <p>
-            Certificates issued by Solvanta Consulting confirm completion of a Solvanta
-            Consulting learning activity or assessment. They are not licences, government
-            approvals, or accredited qualifications unless explicitly stated by a recognised
-            authority.
-          </p>
+            <div class="form-row">
+              <label for="contactMessage">Message *</label>
+              <textarea
+                id="contactMessage"
+                name="message"
+                rows="5"
+                placeholder="Tell us how we can help you..."
+                required
+              ></textarea>
+            </div>
 
-          <div class="hero-actions mt-40">
-            <a class="btn btn-primary" href="/certificates/">Learn about certificates</a>
-            <a class="btn btn-secondary" href="/privacy-policy/">Read privacy policy</a>
-          </div>
+            <div class="form-row form-row-check">
+              <label class="check-label">
+                <input type="checkbox" id="contactConsent" name="consent" required />
+                <span>
+                  I agree that Solvanta Learning may use the information I have provided
+                  to respond to this enquiry. I have read the
+                  <a href="/privacy-policy/">privacy policy</a>.
+                </span>
+              </label>
+            </div>
+
+            <button class="btn btn-primary" type="submit" id="contactSubmit">Send message</button>
+
+            <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
+
+          </form>
         </article>
+
+        <div class="status-box mt-40">
+          <h3>Other ways to contact us</h3>
+          <p class="muted">
+            You can also reach us by email at
+            <a href="mailto:helpdesk@solvantaconsulting.com">helpdesk@solvantaconsulting.com</a>.
+            We aim to respond to all enquiries within two business days.
+          </p>
+        </div>
+
+        <div class="status-box mt-40">
+          <h3>Privacy</h3>
+          <p class="muted">
+            Information submitted through this form is used only to respond to your enquiry.
+            We do not share your information with third parties for marketing purposes.
+            You may request deletion of your enquiry record at any time.
+          </p>
+          <div class="hero-actions mt-24">
+            <a class="btn btn-secondary" href="/privacy-policy/">Privacy policy</a>
+          </div>
+        </div>
+
       </div>
     </section>
+
   </main>
 
   <footer class="site-footer">
     <div class="container footer-layout">
       <div class="footer-brand">
-        <p class="footer-title">Solvanta Consulting</p>
-        <p class="muted">
-          Simple courses. Practical exercises. Support when it matters.
-        </p>
+        <p class="footer-title">Solvanta Learning</p>
+        <p class="muted">Simple courses. Practical exercises. Support when it matters.</p>
       </div>
-
       <div>
-        <h3>Site</h3>
-        <nav class="footer-links" aria-label="Footer site links">
+        <h3>Learn</h3>
+        <nav class="footer-links" aria-label="Footer learn links">
           <a data-footer-link href="/courses/">Courses</a>
-          <a data-footer-link href="/practice/">Practice</a>
-          <a data-footer-link href="/certificates/">Certificates</a>
           <a data-footer-link href="/verify/">Verify certificate</a>
           <a data-footer-link href="/contact/">Contact</a>
         </nav>
       </div>
-
       <div>
         <h3>Policies</h3>
         <nav class="footer-links" aria-label="Footer policy links">
@@ -161,12 +182,13 @@
         </nav>
       </div>
     </div>
-
     <div class="container footer-bottom">
-      © <span data-current-year></span> Solvanta Consulting. All rights reserved.
+      &copy; <span data-current-year></span> Solvanta Learning. All rights reserved.
     </div>
   </footer>
 
+  <script src="../assets/js/config.js"></script>
   <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/contact.js"></script>
 </body>
 </html>
