@@ -3,155 +3,125 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Verify Certificate | Solvanta Consulting</title>
-
-  <meta
-    name="description"
-    content="Verify a certificate issued by Solvanta Consulting using a certificate ID."
-  />
-
+  <title>Verify Certificate | Solvanta Learning</title>
+  <meta name="description" content="Verify a certificate issued by Solvanta Learning. Enter your certificate ID to check its validity." />
   <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
-
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand-link" href="/" aria-label="Solvanta Consulting home">
+      <a class="brand-link" href="/" aria-label="Solvanta Learning home">
         <span class="brand-mark" aria-hidden="true">S</span>
         <span class="brand-text">
-          <span class="brand-name">Solvanta Consulting</span>
+          <span class="brand-name">Solvanta Learning</span>
           <span class="brand-tagline">Simple courses. Practical exercises. Support when it matters.</span>
         </span>
       </a>
-
-      <button
-        class="nav-toggle"
-        type="button"
-        aria-label="Open navigation menu"
-        aria-expanded="false"
-        data-nav-toggle
-      >
+      <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" data-nav-toggle>
         <span aria-hidden="true"></span>
       </button>
-
       <nav class="site-nav" aria-label="Main navigation" data-nav-menu>
         <a href="/">Home</a>
         <a href="/courses/">Courses</a>
-        <a href="/practice/">Practice</a>
-        <a href="/certificates/">Certificates</a>
         <a href="/verify/">Verify</a>
-        <a href="/about/">About</a>
         <a href="/contact/">Contact</a>
       </nav>
     </div>
   </header>
 
   <main id="main-content">
+
     <section class="page-intro">
       <div class="container">
         <p class="kicker">Certificate verification</p>
-        <h1>Verify a Solvanta Consulting certificate.</h1>
+        <h1>Verify a Solvanta Learning certificate.</h1>
         <p class="lead">
-          Enter the certificate ID exactly as shown on the certificate. Certificate
-          verification will display the public record associated with certificates
-          issued by Solvanta Consulting.
+          Enter the certificate ID exactly as shown on the certificate.
+          The verification system will display the public record for any valid certificate
+          issued by Solvanta Learning.
         </p>
       </div>
     </section>
 
     <section class="section">
       <div class="container-narrow">
+
         <article class="card">
           <h2>Certificate lookup</h2>
           <p class="muted">
-            The verification system will be connected to the Solvanta Consulting certificate
-            records. This page is prepared for certificate ID lookup.
+            Enter the certificate ID below. Certificate IDs follow the format
+            <strong>SL-YYYY-XXXXXX</strong>, for example: SL-2026-000001.
           </p>
 
-          <form class="form mt-24" id="verifyForm">
+          <form class="form mt-24" id="verifyForm" novalidate>
             <div class="form-row">
               <label for="certificateId">Certificate ID</label>
               <input
                 type="text"
                 id="certificateId"
                 name="certificateId"
-                placeholder="Example: SOLV-AIP-2026-000001"
+                placeholder="Example: SL-2026-000001"
                 autocomplete="off"
                 required
               />
             </div>
-
-            <button class="btn btn-primary" type="submit">
-              Verify certificate
-            </button>
-
-            <p class="form-status" id="verifyStatus"></p>
+            <button class="btn btn-primary" type="submit">Verify certificate</button>
+            <p class="form-status" id="verifyStatus" role="status" aria-live="polite"></p>
           </form>
         </article>
 
-        <div class="status-box mt-40 hidden" id="verifyResult">
-          <span class="status-label valid" id="verifyResultLabel">Status</span>
+        <div class="status-box mt-40 hidden" id="verifyResult" aria-live="polite">
+          <span class="status-label" id="verifyResultLabel">Status</span>
           <h3 class="mt-24" id="verifyResultTitle">Certificate result</h3>
           <div id="verifyResultBody"></div>
         </div>
 
         <div class="status-box mt-40">
-          <h3>What verification may show</h3>
+          <h3>What verification shows</h3>
           <p class="muted">
-            A valid certificate record may show the certificate status, participant name,
-            course name, certificate type, issue date, score if applicable, certificate ID,
-            and issuer name.
+            A valid certificate record will show: certificate status, learner name,
+            course name, certificate type, issue date, score (if applicable),
+            certificate ID, and issuer name.
           </p>
           <p class="muted">
-            Email addresses and private contact details are not displayed on the public
+            Email addresses and private contact details are not shown on the public
             verification page.
           </p>
         </div>
-      </div>
-    </section>
 
-    <section class="section section-soft section-border">
-      <div class="container-narrow">
-        <p class="kicker">Important</p>
-        <h2>Certificate records may be deleted on request.</h2>
-        <p class="lead">
-          If a certificate holder requests deletion of their certificate record, the certificate
-          may no longer be available for public verification. This does not necessarily mean
-          the certificate was invalid; it may mean the record was removed following a deletion
-          request.
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="/data-deletion/">Read data deletion process</a>
-          <a class="btn btn-secondary" href="/certificate-policy/">Read certificate policy</a>
+        <div class="status-box mt-40">
+          <h3>Certificate records and deletion</h3>
+          <p class="muted">
+            If a certificate holder requests deletion of their record, the certificate
+            may no longer appear in verification results. This does not mean the certificate
+            was invalid — the record may have been removed at the holder's request.
+          </p>
+          <div class="hero-actions mt-24">
+            <a class="btn btn-secondary" href="/data-deletion/">Data deletion process</a>
+          </div>
         </div>
+
       </div>
     </section>
+
   </main>
 
   <footer class="site-footer">
     <div class="container footer-layout">
       <div class="footer-brand">
-        <p class="footer-title">Solvanta Consulting</p>
-        <p class="muted">
-          Simple courses. Practical exercises. Support when it matters.
-        </p>
+        <p class="footer-title">Solvanta Learning</p>
+        <p class="muted">Simple courses. Practical exercises. Support when it matters.</p>
       </div>
-
       <div>
-        <h3>Site</h3>
-        <nav class="footer-links" aria-label="Footer site links">
+        <h3>Learn</h3>
+        <nav class="footer-links" aria-label="Footer learn links">
           <a data-footer-link href="/courses/">Courses</a>
-          <a data-footer-link href="/practice/">Practice</a>
-          <a data-footer-link href="/certificates/">Certificates</a>
           <a data-footer-link href="/verify/">Verify certificate</a>
           <a data-footer-link href="/contact/">Contact</a>
         </nav>
       </div>
-
       <div>
         <h3>Policies</h3>
         <nav class="footer-links" aria-label="Footer policy links">
@@ -162,12 +132,12 @@
         </nav>
       </div>
     </div>
-
     <div class="container footer-bottom">
-      © <span data-current-year></span> Solvanta Consulting. All rights reserved.
+      &copy; <span data-current-year></span> Solvanta Learning. All rights reserved.
     </div>
   </footer>
 
+  <script src="../assets/js/config.js"></script>
   <script src="../assets/js/main.js"></script>
   <script src="../assets/js/verify.js"></script>
 </body>
