@@ -3,59 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Courses | Solvanta Consulting</title>
-
-  <meta
-    name="description"
-    content="Free courses from Solvanta Consulting focused on practical workplace and professional skills."
-  />
-
+  <title>Courses | Solvanta Learning</title>
+  <meta name="description" content="Free practical courses from Solvanta Learning covering AI prompting, professional communication, Excel, and interview readiness." />
   <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
-
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand-link" href="/" aria-label="Solvanta Consulting home">
+      <a class="brand-link" href="/" aria-label="Solvanta Learning home">
         <span class="brand-mark" aria-hidden="true">S</span>
         <span class="brand-text">
-          <span class="brand-name">Solvanta Consulting</span>
+          <span class="brand-name">Solvanta Learning</span>
           <span class="brand-tagline">Simple courses. Practical exercises. Support when it matters.</span>
         </span>
       </a>
-
-      <button
-        class="nav-toggle"
-        type="button"
-        aria-label="Open navigation menu"
-        aria-expanded="false"
-        data-nav-toggle
-      >
+      <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" data-nav-toggle>
         <span aria-hidden="true"></span>
       </button>
-
       <nav class="site-nav" aria-label="Main navigation" data-nav-menu>
         <a href="/">Home</a>
         <a href="/courses/">Courses</a>
-        <a href="/practice/">Practice</a>
-        <a href="/certificates/">Certificates</a>
         <a href="/verify/">Verify</a>
-        <a href="/about/">About</a>
         <a href="/contact/">Contact</a>
       </nav>
     </div>
   </header>
 
   <main id="main-content">
+
     <section class="page-intro">
       <div class="container">
         <p class="kicker">Courses</p>
         <h1>Free courses for practical professional skills.</h1>
         <p class="lead">
-          Solvanta Consulting courses are designed to be simple, focused, and useful.
+          Solvanta Learning courses are short, focused, and free.
           Course content is being prepared and will be added in stages.
         </p>
       </div>
@@ -63,89 +46,94 @@
 
     <section class="section">
       <div class="container">
-        <h2>Planned course areas</h2>
+        <p class="kicker">Available courses</p>
+        <h2>Planned course areas.</h2>
         <p class="lead">
-          The courses below are planned categories. Full course content and assessments will be added after the certificate and verification foundation is ready.
+          The following course areas are being developed. Enrolment and assessment features
+          will be added once the certificate and verification foundation is complete.
         </p>
-
-        <div class="grid grid-auto mt-40">
+        <div class="grid grid-auto mt-40" id="courseList">
           <article class="card">
             <div class="card-icon" aria-hidden="true">AI</div>
             <h3>AI Prompting Basics</h3>
-            <p>
-              Learn how to write clearer prompts, provide useful context, and improve outputs from AI tools.
-            </p>
+            <p>Learn how to write clearer prompts, provide useful context, and improve outputs from AI tools.</p>
+            <span class="status-badge coming-soon">Coming soon</span>
           </article>
-
           <article class="card">
             <div class="card-icon" aria-hidden="true">CM</div>
             <h3>Professional Communication</h3>
-            <p>
-              Practical lessons for writing clearer emails, updates, summaries, and workplace messages.
-            </p>
+            <p>Practical lessons for writing clearer emails, updates, summaries, and workplace messages.</p>
+            <span class="status-badge coming-soon">Coming soon</span>
           </article>
-
           <article class="card">
             <div class="card-icon" aria-hidden="true">XL</div>
             <h3>Basic Excel Skills</h3>
-            <p>
-              Simple Excel concepts for everyday work, including formulas, tables, and basic data handling.
-            </p>
+            <p>Simple Excel concepts for everyday work, including formulas, tables, and basic data handling.</p>
+            <span class="status-badge coming-soon">Coming soon</span>
           </article>
-
           <article class="card">
             <div class="card-icon" aria-hidden="true">IR</div>
             <h3>Interview Readiness</h3>
-            <p>
-              Practice common interview question types, structure answers, and prepare examples clearly.
-            </p>
+            <p>Practise common interview question types, structure answers, and prepare examples clearly.</p>
+            <span class="status-badge coming-soon">Coming soon</span>
           </article>
         </div>
+        <p class="muted mt-40" id="courseLoadStatus"></p>
       </div>
     </section>
 
     <section class="section section-soft section-border">
       <div class="container grid grid-2">
         <div>
-          <p class="kicker">Certificates</p>
-          <h2>Certificates will be available for eligible courses.</h2>
+          <p class="kicker">Stay informed</p>
+          <h2>Get notified when courses are published.</h2>
         </div>
-
         <div>
           <p class="lead">
-            Some courses may include a Certificate of Completion or Certificate of Assessment.
-            Assessment certificates require the learner to meet the required pass score.
+            Use the contact form to register your interest in a specific course area.
+            We will notify you when content becomes available.
           </p>
-
           <div class="hero-actions">
-            <a class="btn btn-primary" href="/certificates/">Learn about certificates</a>
+            <a class="btn btn-primary" href="/contact/">Register interest</a>
             <a class="btn btn-secondary" href="/verify/">Verify a certificate</a>
           </div>
         </div>
       </div>
     </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="kicker">Certificates</p>
+        <h2>Certificates available for eligible courses.</h2>
+        <div class="grid grid-2 mt-40">
+          <article class="card card-soft">
+            <h3>Certificate of Completion</h3>
+            <p>Issued when a learner completes the required course content or learning activity.</p>
+          </article>
+          <article class="card card-soft">
+            <h3>Certificate of Assessment</h3>
+            <p>Issued when a learner completes an assessment and meets the required pass score. The default pass score is 70%.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer">
     <div class="container footer-layout">
       <div class="footer-brand">
-        <p class="footer-title">Solvanta Consulting</p>
-        <p class="muted">
-          Simple courses. Practical exercises. Support when it matters.
-        </p>
+        <p class="footer-title">Solvanta Learning</p>
+        <p class="muted">Simple courses. Practical exercises. Support when it matters.</p>
       </div>
-
       <div>
-        <h3>Site</h3>
-        <nav class="footer-links" aria-label="Footer site links">
+        <h3>Learn</h3>
+        <nav class="footer-links" aria-label="Footer learn links">
           <a data-footer-link href="/courses/">Courses</a>
-          <a data-footer-link href="/practice/">Practice</a>
-          <a data-footer-link href="/certificates/">Certificates</a>
           <a data-footer-link href="/verify/">Verify certificate</a>
           <a data-footer-link href="/contact/">Contact</a>
         </nav>
       </div>
-
       <div>
         <h3>Policies</h3>
         <nav class="footer-links" aria-label="Footer policy links">
@@ -156,12 +144,13 @@
         </nav>
       </div>
     </div>
-
     <div class="container footer-bottom">
-      © <span data-current-year></span> Solvanta Consulting. All rights reserved.
+      &copy; <span data-current-year></span> Solvanta Learning. All rights reserved.
     </div>
   </footer>
 
+  <script src="../assets/js/config.js"></script>
   <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/courses.js"></script>
 </body>
 </html>
