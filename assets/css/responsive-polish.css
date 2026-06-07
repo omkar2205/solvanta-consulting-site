@@ -32,6 +32,19 @@
   padding: 54px 0;
 }
 
+.card > h2:first-child,
+.card > h3:first-child,
+.hero-panel-card > h3:first-child {
+  margin-top: 0;
+}
+
+.about-omkar-body h2 {
+  margin: 0 0 14px;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
 .focus-list {
   display: grid;
   gap: 14px;
