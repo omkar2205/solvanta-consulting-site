@@ -7,6 +7,7 @@ loadResponsivePolish();
 
 document.addEventListener("DOMContentLoaded", () => {
   initBrandLogo();
+  initPrimaryNavigation();
   initMobileNavigation();
   initActiveNavigation();
   initCurrentYear();
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 ----------------------------- */
 
 function loadResponsivePolish() {
-  const href = "/assets/css/responsive-polish.css?v=2";
+  const href = "/assets/css/responsive-polish.css?v=3";
 
   if (document.querySelector(`link[href="${href}"]`)) return;
 
@@ -42,6 +43,26 @@ function initBrandLogo() {
     brandMark.classList.add("brand-mark-primary");
     brandLink.classList.add("has-primary-logo");
     brandMark.innerHTML = '<img class="brand-logo-primary" src="/assets/img/logo-primary.svg" alt="" width="180" height="67" />';
+  });
+}
+
+/* -----------------------------
+   Primary navigation
+----------------------------- */
+
+function initPrimaryNavigation() {
+  const navMenus = document.querySelectorAll("[data-nav-menu]");
+  const links = [
+    { href: "/", label: "Home" },
+    { href: "/courses/", label: "Courses" },
+    { href: "/about/", label: "About" },
+    { href: "/contact/", label: "Contact" },
+  ];
+
+  navMenus.forEach((navMenu) => {
+    navMenu.innerHTML = links
+      .map((link) => `<a href="${link.href}">${link.label}</a>`)
+      .join("");
   });
 }
 
