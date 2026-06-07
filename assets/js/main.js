@@ -6,6 +6,7 @@
 loadResponsivePolish();
 
 document.addEventListener("DOMContentLoaded", () => {
+  initBrandLogo();
   initMobileNavigation();
   initActiveNavigation();
   initCurrentYear();
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 ----------------------------- */
 
 function loadResponsivePolish() {
-  const href = "/assets/css/responsive-polish.css?v=1";
+  const href = "/assets/css/responsive-polish.css?v=2";
 
   if (document.querySelector(`link[href="${href}"]`)) return;
 
@@ -25,6 +26,23 @@ function loadResponsivePolish() {
   link.rel = "stylesheet";
   link.href = href;
   document.head.appendChild(link);
+}
+
+/* -----------------------------
+   Brand logo
+----------------------------- */
+
+function initBrandLogo() {
+  const brandLinks = document.querySelectorAll(".brand-link");
+
+  brandLinks.forEach((brandLink) => {
+    const brandMark = brandLink.querySelector(".brand-mark");
+    if (!brandMark) return;
+
+    brandMark.classList.add("brand-mark-primary");
+    brandLink.classList.add("has-primary-logo");
+    brandMark.innerHTML = '<img class="brand-logo-primary" src="/assets/img/logo-primary.svg" alt="" width="180" height="67" />';
+  });
 }
 
 /* -----------------------------
