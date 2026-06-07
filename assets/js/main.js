@@ -3,12 +3,29 @@
    Shared Site Behaviour
    ========================================================= */
 
+loadResponsivePolish();
+
 document.addEventListener("DOMContentLoaded", () => {
   initMobileNavigation();
   initActiveNavigation();
   initCurrentYear();
   initExternalLinks();
 });
+
+/* -----------------------------
+   Responsive polish stylesheet
+----------------------------- */
+
+function loadResponsivePolish() {
+  const href = "/assets/css/responsive-polish.css?v=1";
+
+  if (document.querySelector(`link[href="${href}"]`)) return;
+
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = href;
+  document.head.appendChild(link);
+}
 
 /* -----------------------------
    Mobile navigation
