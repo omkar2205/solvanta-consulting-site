@@ -4,11 +4,11 @@
    ========================================================= */
 
 .brand-link.has-primary-logo {
-  gap: 12px;
+  gap: 0;
 }
 
 .brand-mark.brand-mark-primary {
-  width: clamp(136px, 18vw, 178px);
+  width: clamp(140px, 18vw, 184px);
   height: auto;
   min-height: 44px;
   display: flex;
@@ -24,18 +24,50 @@
   object-fit: contain;
 }
 
-.brand-link.has-primary-logo .brand-name {
+.brand-link.has-primary-logo .brand-text {
   display: none;
 }
 
-.brand-link.has-primary-logo .brand-text {
-  min-width: 0;
+.coming-soon-panel {
+  max-width: 760px;
 }
 
-.brand-link.has-primary-logo .brand-tagline {
-  margin-top: 0;
-  max-width: 260px;
-  line-height: 1.25;
+.coming-soon-panel .lead {
+  margin-top: 14px;
+}
+
+.course-support-list {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.course-support-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: var(--muted);
+}
+
+.course-support-list li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  margin-top: 0.65em;
+  border-radius: 999px;
+  background: var(--accent);
+  flex: 0 0 auto;
+}
+
+.verify-quiet-card {
+  border-color: rgba(20, 98, 88, 0.18);
+}
+
+.verify-quiet-card h2,
+.verify-quiet-card h3 {
+  max-width: 680px;
 }
 
 @media (min-width: 1041px) {
