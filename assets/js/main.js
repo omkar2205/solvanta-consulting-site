@@ -8,6 +8,7 @@ loadResponsivePolish();
 document.addEventListener("DOMContentLoaded", () => {
   initBrandLogo();
   initPrimaryNavigation();
+  initFooterNavigation();
   initMobileNavigation();
   initActiveNavigation();
   initCurrentYear();
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 ----------------------------- */
 
 function loadResponsivePolish() {
-  const href = "/assets/css/responsive-polish.css?v=3";
+  const href = "/assets/css/responsive-polish.css?v=4";
 
   if (document.querySelector(`link[href="${href}"]`)) return;
 
@@ -64,6 +65,40 @@ function initPrimaryNavigation() {
       .map((link) => `<a href="${link.href}">${link.label}</a>`)
       .join("");
   });
+}
+
+/* -----------------------------
+   Footer navigation
+----------------------------- */
+
+function initFooterNavigation() {
+  const footerLayout = document.querySelector(".site-footer .footer-layout");
+  if (!footerLayout) return;
+
+  footerLayout.innerHTML = `
+    <div class="footer-brand">
+      <p class="footer-title">Solvanta Consulting</p>
+      <p class="muted">Free practical learning resources, with certificates only where they fit the course.</p>
+    </div>
+    <div>
+      <h3>Site</h3>
+      <nav class="footer-links" aria-label="Footer site links">
+        <a data-footer-link href="/courses/">Courses</a>
+        <a data-footer-link href="/about/">About</a>
+        <a data-footer-link href="/contact/">Contact</a>
+        <a data-footer-link href="/verify/">Certificate lookup</a>
+      </nav>
+    </div>
+    <div>
+      <h3>Policies</h3>
+      <nav class="footer-links" aria-label="Footer policy links">
+        <a data-footer-link href="/privacy-policy/">Privacy Policy</a>
+        <a data-footer-link href="/terms/">Terms of Use</a>
+        <a data-footer-link href="/certificate-policy/">Certificate Policy</a>
+        <a data-footer-link href="/data-deletion/">Data Deletion</a>
+      </nav>
+    </div>
+  `;
 }
 
 /* -----------------------------
