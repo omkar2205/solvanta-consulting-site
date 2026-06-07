@@ -1,5 +1,5 @@
 /* =========================================================
-  Solvanta Learning
+  Solvanta Consulting
   Courses Page — Apps Script Integration
   ========================================================= */
 
