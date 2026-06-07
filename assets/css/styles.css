@@ -1117,3 +1117,66 @@ Page_Down
          padding: 3rem 0;
   }
 }
+Page_Up
+
+/* About Omkar - Complete Fix */
+.about-omkar {
+     padding: 4rem 0;
+}
+
+.about-omkar-layout {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 3rem;
+     align-items: center;
+}
+
+.about-omkar-text {
+     order: 1;
+}
+
+.about-omkar-content {
+     margin: 1.5rem 0;
+}
+
+.about-omkar-content p {
+     margin: 1rem 0;
+     line-height: 1.6;
+     color: var(--color-text);
+}
+
+.about-omkar-content p:first-child {
+     margin-top: 0;
+}
+
+.about-omkar-actions {
+     margin-top: 2rem;
+}
+
+.about-omkar-photo {
+     order: 2;
+     text-align: center;
+}
+
+.profile-photo {
+     width: 100%;
+     max-width: 280px;
+     height: auto;
+     border-radius: 0.5rem;
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+     .about-omkar-layout {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+     }
+
+  .about-omkar {
+         padding: 3rem 0;
+  }
+
+  .profile-photo {
+         max-width: 200px;
+  }
+}
