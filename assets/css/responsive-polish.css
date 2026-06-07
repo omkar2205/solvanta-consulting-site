@@ -1,0 +1,142 @@
+/* =========================================================
+   Solvanta Consulting
+   Responsive polish
+   ========================================================= */
+
+@media (min-width: 1041px) {
+  :root {
+    --container: 1080px;
+  }
+
+  .header-inner {
+    width: min(100% - 48px, var(--container));
+  }
+
+  h1 {
+    max-width: 820px;
+    font-size: clamp(3.6rem, 5.4vw, 5.4rem);
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+  }
+
+  h2 {
+    max-width: 760px;
+    font-size: clamp(2.25rem, 3.5vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+
+  .section {
+    padding: 76px 0;
+  }
+
+  .page-intro {
+    padding: 66px 0 42px;
+  }
+
+  .hero {
+    padding: 78px 0 66px;
+  }
+
+  .hero-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+    gap: 48px;
+    align-items: center;
+  }
+
+  .hero-copy {
+    max-width: 760px;
+  }
+
+  .hero-panel {
+    padding: 24px;
+  }
+
+  .hero-panel-card {
+    padding: 20px;
+  }
+
+  .grid {
+    gap: 22px;
+  }
+
+  .grid-3 {
+    align-items: stretch;
+  }
+
+  .grid-3 > .card,
+  .grid-auto > .card,
+  .grid-2 > .card {
+    height: 100%;
+  }
+
+  .grid-auto {
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .section > .container > .lead {
+    max-width: 720px;
+  }
+
+  .section-soft .grid-2 {
+    grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1fr);
+    gap: 52px;
+    align-items: center;
+  }
+
+  .container-narrow {
+    width: min(100% - 48px, 940px);
+  }
+
+  .about-omkar {
+    margin-bottom: 48px;
+  }
+
+  .about-omkar-inner {
+    gap: 34px;
+    padding: 30px;
+  }
+
+  .about-omkar-body p {
+    max-width: 700px;
+    line-height: 1.7;
+  }
+}
+
+@media (min-width: 1320px) {
+  h1 {
+    font-size: 5.25rem;
+  }
+}
+
+@media (min-width: 821px) and (max-width: 1040px) {
+  .header-inner {
+    width: min(100% - 40px, 980px);
+  }
+
+  h1 {
+    font-size: clamp(3.1rem, 7vw, 4.6rem);
+    line-height: 1.05;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4.8vw, 3rem);
+    line-height: 1.1;
+  }
+
+  .hero {
+    padding: 68px 0 60px;
+  }
+
+  .hero-panel {
+    max-width: none;
+  }
+
+  .grid-auto {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
