@@ -1,5 +1,5 @@
 /* =========================================================
-  Solvanta Learning
+  Solvanta Consulting
   Certificate Verification
   ========================================================= */
 
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!form || !certInput) return;
 
-  // Pre-fill from URL parameter (?id=SL-2026-000001)
+  // Pre-fill from URL parameter (?id=SOLV-AIP-2026-000001)
   const urlParams = new URLSearchParams(window.location.search);
   const certFromUrl = urlParams.get("id");
   if (certFromUrl) {
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
           { label: "Status", value: data.status },
           { label: "Score", value: data.score ? data.score + "%" : null },
           { label: "Certificate ID", value: data.certificateId },
-          { label: "Issued by", value: "Solvanta Learning" }
+          { label: "Issued by", value: "Solvanta Consulting" }
         ]);
       } else {
         resultBody.innerHTML =
