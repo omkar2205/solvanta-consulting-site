@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verify Certificate | Solvanta Consulting</title>
-  <meta name="description" content="Verify a certificate issued by Solvanta Consulting. Enter your certificate ID to check its validity." />
+  <title>Certificate Lookup | Solvanta Consulting</title>
+  <meta name="description" content="Look up a Solvanta Consulting certificate record using a certificate ID." />
   <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
 <body>
@@ -38,12 +38,11 @@
 
     <section class="page-intro">
       <div class="container">
-        <p class="kicker">Certificate verification</p>
-        <h1>Verify a Solvanta Consulting certificate.</h1>
+        <p class="kicker">Certificate lookup</p>
+        <h1>Look up a certificate record.</h1>
         <p class="lead">
-          Enter the certificate ID exactly as shown on the certificate.
-          The verification system will display the public record for any valid certificate
-          issued by Solvanta Consulting.
+          If you have a certificate ID issued by Solvanta Consulting, enter it below to check
+          whether a public record is available.
         </p>
       </div>
     </section>
@@ -51,11 +50,11 @@
     <section class="section">
       <div class="container-narrow">
 
-        <article class="card">
-          <h2>Certificate lookup</h2>
+        <article class="card verify-quiet-card">
+          <h2>Enter certificate ID</h2>
           <p class="muted">
-            Enter the certificate ID below. Certificate IDs follow the format
-            <strong>SOLV-[COURSECODE]-[YEAR]-[SEQUENCE]</strong>, for example: SOLV-AIP-2026-000001.
+            Certificate IDs follow the format
+            <strong>SOLV-[COURSECODE]-[YEAR]-[SEQUENCE]</strong>, for example SOLV-AIP-2026-000001.
           </p>
 
           <form class="form mt-24" id="verifyForm" novalidate>
@@ -70,7 +69,7 @@
                 required
               />
             </div>
-            <button class="btn btn-primary" type="submit">Verify certificate</button>
+            <button class="btn btn-primary" type="submit">Look up certificate</button>
             <p class="form-status" id="verifyStatus" role="status" aria-live="polite"></p>
           </form>
         </article>
@@ -82,26 +81,26 @@
         </div>
 
         <div class="status-box mt-40">
-          <h3>What verification shows</h3>
+          <h3>Public record details</h3>
           <p class="muted">
-            A valid certificate record will show: certificate status, learner name,
-            course name, certificate type, issue date, score (if applicable),
-            certificate ID, and issuer name.
+            If a matching record exists, the lookup may show certificate status, learner name,
+            course name, certificate type, issue date, score if applicable, certificate ID,
+            and issuer name.
           </p>
           <p class="muted">
-            Email addresses and private contact details are not shown on the public
-            verification page.
+            Email addresses and private contact details are not shown on the public lookup page.
           </p>
         </div>
 
         <div class="status-box mt-40">
-          <h3>Certificate records and deletion</h3>
+          <h3>Deleted records</h3>
           <p class="muted">
-            If a certificate holder requests deletion of their record, the certificate
-            may no longer appear in verification results. This does not mean the certificate
-            was invalid — the record may have been removed at the holder's request.
+            If a certificate holder requests deletion of their record, the certificate may no
+            longer appear in lookup results. This does not automatically mean the certificate
+            was invalid.
           </p>
           <div class="hero-actions mt-24">
+            <a class="btn btn-secondary" href="/courses/">Back to courses</a>
             <a class="btn btn-secondary" href="/data-deletion/">Data deletion process</a>
           </div>
         </div>
