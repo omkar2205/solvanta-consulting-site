@@ -1,5 +1,5 @@
 /* =========================================================
-  Solvanta Learning
+  Solvanta Consulting
   Contact Form — Apps Script Integration
   ========================================================= */
 
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.success) {
         showStatus(
           "Thank you, " + escapeHtml(name) + ". Your message has been received. " +
-          "We aim to respond within two business days.",
+          "We aim to respond as soon as reasonably possible.",
           "success"
         );
         form.reset();
