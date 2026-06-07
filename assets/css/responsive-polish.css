@@ -3,6 +3,41 @@
    Responsive polish
    ========================================================= */
 
+.brand-link.has-primary-logo {
+  gap: 12px;
+}
+
+.brand-mark.brand-mark-primary {
+  width: clamp(136px, 18vw, 178px);
+  height: auto;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.brand-mark.brand-mark-primary img,
+.brand-logo-primary {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.brand-link.has-primary-logo .brand-name {
+  display: none;
+}
+
+.brand-link.has-primary-logo .brand-text {
+  min-width: 0;
+}
+
+.brand-link.has-primary-logo .brand-tagline {
+  margin-top: 0;
+  max-width: 260px;
+  line-height: 1.25;
+}
+
 @media (min-width: 1041px) {
   :root {
     --container: 1080px;
@@ -138,5 +173,12 @@
 
   .grid-auto {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .brand-mark.brand-mark-primary {
+    width: clamp(126px, 42vw, 158px);
+    min-height: 40px;
   }
 }
