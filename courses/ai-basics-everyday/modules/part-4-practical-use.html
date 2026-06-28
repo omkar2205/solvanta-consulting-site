@@ -1,16 +1,556 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-<meta charset='UTF-8' />
-<meta name='viewport' content='width=device-width, initial-scale=1.0' />
-<title>Practical Use | AI Basics for Everyday Users</title>
-<link rel='stylesheet' href='../../../assets/css/styles.css' />
-<style>.module-shell{min-height:calc(100vh - var(--header-height));background:var(--color-soft)}.module-shellbar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center;padding:14px 24px;border-bottom:1px solid var(--color-border);background:#fff}.module-shellbar h1{margin:0;font-family:var(--font-body);font-size:1rem;line-height:1.25;letter-spacing:0;font-weight:800}.module-shellbar p{margin:0;color:var(--color-muted);font-size:.88rem}.module-link{color:var(--color-primary);font-weight:800;text-decoration:none}.module-frame-wrap{height:calc(100vh - var(--header-height) - 74px);min-height:660px;background:#fff}.module-frame-wrap iframe{display:block;width:100%;height:100%;border:0;background:#fff}.module-status{margin:0;padding:30px;color:var(--color-muted)}@media(max-width:720px){.module-shellbar{grid-template-columns:1fr;gap:8px;padding:14px 16px}.module-frame-wrap{height:calc(100vh - 180px);min-height:620px}}</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Practical Use | AI Basics for Everyday Users | Solvanta Consulting</title>
+<meta name="description" content="Where AI helps, what paid tools change, and where human judgement stays essential." />
+<link rel="stylesheet" href="../../../assets/css/styles.css" />
+<style>
+/* ============ Tokens (shared across the suite) ============ */
+:root{
+  --paper:#FFFFFF;--ink:#1F1B2D;--ink-soft:#3F3A4D;--muted:#6F6A7A;
+  --line:#E8DED4;--line-2:#DED1C4;--bg-1:#FAF7F2;--bg-2:#F3EADF;
+  --blue:#9A4F2F;--blue-soft:#F3EADF;--blue-bd:#E8DED4;
+  --green:#15A24A;--green-soft:#E7F6EC;--green-bd:#C7E8D3;
+  --orange:#E4691C;--orange-soft:#FCEEE3;--orange-bd:#F4D3BC;
+  --amber:#CC8A0A;--amber-soft:#FCF1D9;--amber-bd:#F0DCA8;
+  --red:#D33A2C;--red-soft:#FCE9E7;--red-bd:#F3C9C3;
+  --marker:#FCE38A;
+  --mono:Consolas,"SF Mono","Courier New",monospace;
+  --shadow-sm:0 4px 14px rgba(31,27,45,.06);--shadow-md:0 16px 40px rgba(31,27,45,.08);--shadow-lg:0 30px 64px rgba(154,79,47,.13);
+  --r:18px;--r-sm:13px;
+}
+[data-accent="blue"]{--ac:var(--blue);--ac-soft:var(--blue-soft);--ac-bd:var(--blue-bd)}
+[data-accent="green"]{--ac:var(--green);--ac-soft:var(--green-soft);--ac-bd:var(--green-bd)}
+[data-accent="orange"]{--ac:var(--orange);--ac-soft:var(--orange-soft);--ac-bd:var(--orange-bd)}
+[data-accent="amber"]{--ac:var(--amber);--ac-soft:var(--amber-soft);--ac-bd:var(--amber-bd)}
+[data-accent="red"]{--ac:var(--red);--ac-soft:var(--red-soft);--ac-bd:var(--red-bd)}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Aptos,Calibri,Arial,sans-serif;font-size:17px;line-height:1.55;color:var(--ink);
+  background:radial-gradient(1100px 460px at 4% -10%,rgba(154,79,47,.07),transparent 60%),radial-gradient(900px 420px at 104% -2%,rgba(204,138,10,.07),transparent 55%),linear-gradient(180deg,var(--bg-1),var(--bg-2));background-attachment:fixed}
+button,input{font-family:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid rgba(154,79,47,.45);outline-offset:2px;border-radius:8px}
+
+/* ============ Progress + top bar ============ */
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--blue),var(--green));z-index:60;transition:width .1s linear}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:18px;padding:13px clamp(16px,4vw,44px);background:rgba(245,248,253,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(232,222,212,.7)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.logo-mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(140deg,#9A4F2F,#5F2E1F);color:#fff;font-size:15px;font-weight:900;box-shadow:0 8px 18px rgba(154,79,47,.3)}
+.part-tag{font-size:11px;font-weight:900;color:var(--blue);background:var(--blue-soft);border:1px solid var(--blue-bd);padding:3px 8px;border-radius:999px;letter-spacing:.04em}
+.nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.nav a{color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:700;padding:7px 11px;border-radius:999px;transition:background .15s,color .15s}
+.nav a:hover{background:#fff;color:var(--blue);box-shadow:var(--shadow-sm)}
+.nav a.active{background:var(--blue-soft);color:var(--blue)}
+
+/* ============ Layout ============ */
+.wrap{width:min(1200px,calc(100% - 40px));margin:0 auto;padding:30px 0 90px}
+.block{margin-top:30px;scroll-margin-top:84px;background:rgba(255,255,255,.8);border:1px solid rgba(232,222,212,.85);border-radius:var(--r);box-shadow:var(--shadow-md);overflow:hidden}
+.block-head{padding:26px 30px 18px;border-bottom:1px solid var(--line)}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:900;letter-spacing:.11em;text-transform:uppercase;color:var(--ac,var(--blue));background:var(--ac-soft,var(--blue-soft));border:1px solid var(--ac-bd,var(--blue-bd));padding:6px 11px;border-radius:999px;margin-bottom:14px}
+.step-no{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:var(--ac);color:#fff;font-weight:900;font-size:15px;margin-right:10px;vertical-align:-7px}
+h2.title{margin:0;font-size:clamp(25px,3vw,38px);line-height:1.04;letter-spacing:-.04em}
+.sub{margin:9px 0 0;color:var(--muted);max-width:820px;font-size:clamp(15px,1.4vw,18px)}
+.body-pad{padding:24px 30px 28px}
+
+/* ============ Hero ============ */
+.hero{display:grid;grid-template-columns:1.12fr .88fr;gap:24px;margin-bottom:4px}
+.hero-card{position:relative;overflow:hidden;background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r);box-shadow:var(--shadow-lg);padding:clamp(28px,4vw,54px)}
+.hero-card::after{content:"";position:absolute;right:-90px;bottom:-110px;width:240px;height:240px;border-radius:999px;background:radial-gradient(circle,var(--amber) 0 30%,transparent 31%);opacity:.14}
+.hero-card::before{content:"";position:absolute;right:26%;top:-70px;width:150px;height:150px;border-radius:999px;background:radial-gradient(circle,var(--blue) 0 34%,transparent 35%);opacity:.12}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:900;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);background:var(--blue-soft);border:1px solid var(--blue-bd);padding:7px 12px;border-radius:999px;margin-bottom:18px}
+h1{font-size:clamp(36px,5.4vw,68px);line-height:.98;margin:0 0 18px;letter-spacing:-.055em}
+.hl{background:linear-gradient(transparent 60%,var(--marker) 60%);padding:0 .06em;border-radius:3px}
+.hero-lede{font-size:clamp(17px,1.8vw,21px);color:var(--ink-soft);margin:0 0 24px;max-width:660px}
+.cta{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(140deg,#9A4F2F,#5F2E1F);color:#fff;border:none;border-radius:999px;padding:13px 22px;font-weight:800;font-size:16px;box-shadow:0 14px 30px rgba(154,79,47,.3);transition:transform .15s,box-shadow .15s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 20px 40px rgba(154,79,47,.36)}
+.cta .arr{transition:transform .18s}.cta:hover .arr{transform:translateY(2px)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.chip{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:8px 13px;font-weight:800;font-size:13px;border:1px solid var(--line-2);background:#fff}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.chip.g::before{background:var(--green)}.chip.o::before{background:var(--orange)}.chip.a::before{background:var(--amber)}
+.hero-side{display:grid;gap:14px;align-content:start}
+.mini-fact{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:var(--r-sm);padding:20px;box-shadow:var(--shadow-sm)}
+.mini-fact .mf-num{font-family:var(--mono);font-size:25px;font-weight:800;letter-spacing:-.03em;color:var(--blue)}
+.mini-fact .mf-lab{color:var(--ink-soft);font-size:15px;margin-top:4px;font-weight:600}
+.mini-fact.g .mf-num{color:var(--green)}.mini-fact.o .mf-num{color:var(--orange)}
+
+/* ============ note + buttons ============ */
+.note{margin:20px 0 0;padding:14px 16px;border-radius:var(--r-sm);background:var(--blue-soft);border:1px solid var(--blue-bd);color:#163a86;font-weight:650;font-size:15.5px}
+.note b{color:var(--blue)}
+.note.warn{background:var(--amber-soft);border-color:var(--amber-bd);color:#7a5500}.note.warn b{color:var(--amber)}
+.btn-light{border:1px solid var(--line-2);background:#fff;color:var(--ink);border-radius:999px;padding:10px 16px;font-weight:800;font-size:14px;transition:border-color .15s,transform .15s,background .15s}
+.btn-light:hover:not(:disabled){border-color:var(--blue);transform:translateY(-1px)}
+.btn-light.solid{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn-light.solid:hover:not(:disabled){background:#7D3F27}
+
+/* ============ Selector panel (access modes / pricing) ============ */
+.sel-tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px}
+.sel-panel{border:1px solid var(--line);border-radius:var(--r-sm);background:#FFFDFC;padding:24px}
+.sel-panel h3{margin:0 0 6px;font-size:clamp(21px,2.3vw,28px);letter-spacing:-.03em}
+.sel-lead{margin:0 0 16px;font-size:16px;color:var(--ink-soft)}
+.sel-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sel-box{border:1px solid var(--line);border-radius:12px;padding:14px 15px;background:#fff}
+.sel-box .l{font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;color:var(--blue)}
+.sel-box.cost .l{color:var(--green)}.sel-box.who .l{color:var(--orange)}.sel-box.ex .l{color:var(--amber)}
+.sel-box p{margin:0;color:var(--ink-soft);font-size:14.5px}
+
+/* ============ Use-case explorer ============ */
+.filter-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.fchip{border:1px solid var(--line-2);background:#fff;border-radius:999px;padding:8px 13px;font-weight:800;font-size:13px;color:var(--ink-soft);transition:border-color .15s,background .15s,color .15s}
+.fchip:hover{border-color:var(--blue)}
+.fchip.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.use-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ucard{border:1px solid var(--line);border-radius:var(--r-sm);background:#fff;padding:17px;cursor:pointer;border-top:3px solid var(--ac);transition:box-shadow .15s,transform .15s}
+.ucard:hover{box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.ucard.hide{display:none}
+.ucard .uc-tag{font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.ucard h4{margin:4px 0 9px;font-size:16.5px;letter-spacing:-.02em}
+.badges{display:flex;flex-wrap:wrap;gap:7px}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:800;padding:5px 9px;border-radius:999px;border:1px solid}
+.badge.free{background:var(--green-soft);color:var(--green);border-color:var(--green-bd)}
+.badge.paid{background:var(--amber-soft);color:var(--amber);border-color:var(--amber-bd)}
+.badge.light{background:var(--green-soft);color:var(--green);border-color:var(--green-bd)}
+.badge.review{background:var(--amber-soft);color:var(--amber);border-color:var(--amber-bd)}
+.badge.own{background:var(--red-soft);color:var(--red);border-color:var(--red-bd)}
+.uc-ex{margin:0;max-height:0;opacity:0;overflow:hidden;color:var(--muted);font-size:13.5px;transition:max-height .25s,opacity .2s,margin .25s,padding .25s;border-top:1px solid transparent}
+.ucard.open .uc-ex{max-height:160px;opacity:1;margin-top:11px;padding-top:11px;border-top-color:var(--line)}
+.uc-more{display:inline-block;margin-top:9px;font-size:12px;font-weight:800;color:var(--ac)}
+
+/* ============ Pricing disclaimer ============ */
+.disclaimer{display:flex;gap:11px;align-items:flex-start;border:1px dashed var(--amber-bd);background:var(--amber-soft);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:18px}
+.disclaimer .di{font-weight:900;color:var(--amber);flex:none}
+.disclaimer p{margin:0;color:#7a5500;font-size:14px;font-weight:650}
+.tier-cost{display:inline-block;font-family:var(--mono);font-weight:800;font-size:15px;color:var(--blue);background:var(--blue-soft);border:1px solid var(--blue-bd);padding:6px 12px;border-radius:999px;margin:2px 0 12px}
+
+/* ============ Website build walkthrough ============ */
+.wk-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:20px;align-items:start}
+.wk-list{display:grid;gap:8px}
+.wk-step{border:1px solid var(--line-2);background:#fff;border-radius:12px;padding:12px 14px;text-align:left;display:grid;grid-template-columns:26px 1fr;gap:11px;align-items:center;transition:border-color .15s,transform .15s,background .15s}
+.wk-step .wn{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:#EDF1F7;color:var(--muted);font-weight:900;font-size:13px;font-family:var(--mono)}
+.wk-step .wt{font-weight:800;font-size:14px;letter-spacing:-.01em}
+.wk-step:hover{border-color:var(--blue);transform:translateX(3px)}
+.wk-step.active{border-color:var(--blue);background:var(--blue-soft);transform:translateX(3px)}
+.wk-step.active .wn{background:var(--blue);color:#fff}
+.wk-panel{border:1px solid var(--line);border-radius:var(--r-sm);background:#FFFDFC;padding:24px;position:sticky;top:96px}
+.wk-panel h3{margin:0 0 4px;font-size:clamp(21px,2.2vw,27px);letter-spacing:-.03em}
+.wk-cost{display:inline-block;font-size:12px;font-weight:800;padding:5px 11px;border-radius:999px;margin-bottom:14px}
+.wk-cost.free{background:var(--green-soft);color:var(--green)}
+.wk-cost.mix{background:var(--amber-soft);color:var(--amber)}
+.wk-cost.paid{background:var(--orange-soft);color:var(--orange)}
+.wk-do{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.wk-do .wd{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff}
+.wk-do .wd .l{font-size:11px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px}
+.wk-do .wd.ai .l{color:var(--blue)}.wk-do .wd.you .l{color:var(--amber)}
+.wk-do .wd p{margin:0;font-size:14px;color:var(--ink-soft)}
+.split-label{font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.split{height:32px;border-radius:9px;overflow:hidden;display:flex;border:1px solid var(--line-2)}
+.split .ai{background:linear-gradient(90deg,#9A4F2F,#5B8DF7);color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px;transition:width .4s ease;min-width:42px}
+.split .you{background:linear-gradient(90deg,var(--amber),#e0a437);color:#3a2c00;display:grid;place-items:center;font-weight:800;font-size:12px;transition:width .4s ease;min-width:42px}
+.wk-tools{margin:16px 0 0;font-size:13.5px;color:var(--muted)}
+.wk-tools b{color:var(--ink)}
+
+/* ============ Human two-column ============ */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.duo .dcard{border:1px solid var(--line);border-radius:var(--r-sm);background:#fff;padding:22px;border-top:4px solid var(--ac)}
+.duo .dcard h3{margin:0 0 4px;font-size:21px;letter-spacing:-.02em;display:flex;align-items:center;gap:9px}
+.duo .dcard .d-ico{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:var(--ac-soft);color:var(--ac);font-weight:900}
+.duo .dcard .d-sub{margin:0 0 12px;color:var(--muted);font-size:14px}
+.duo ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.duo li{display:flex;gap:9px;align-items:flex-start;font-size:15px;color:var(--ink-soft)}
+.duo li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ac);margin-top:8px;flex:none}
+
+/* ============ Verify strip ============ */
+.verify{margin-top:30px;border:1px solid var(--line-2);border-radius:var(--r);background:#fff;box-shadow:var(--shadow-sm);padding:20px 24px}
+.verify .v-head{font-size:clamp(19px,2vw,24px);letter-spacing:-.03em;margin:0 0 4px}
+.verify .v-head b{color:var(--blue)}
+.verify .v-lede{margin:0 0 16px;color:var(--muted);font-size:15px}
+.verify-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.v-item{display:flex;gap:11px;align-items:flex-start}
+.v-ico{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-weight:900;flex:none}
+.v-item:nth-child(1) .v-ico{background:var(--blue-soft);color:var(--blue)}
+.v-item:nth-child(2) .v-ico{background:var(--green-soft);color:var(--green)}
+.v-item:nth-child(3) .v-ico{background:var(--amber-soft);color:var(--amber)}
+.v-item b{display:block;font-size:14.5px;margin-bottom:1px}
+.v-item span{color:var(--muted);font-size:13.5px;line-height:1.4}
+
+/* ============ Responsive ============ */
+@media (max-width:1000px){
+  .hero,.sel-row,.use-grid,.wk-grid,.wk-do,.duo,.verify-row{grid-template-columns:1fr}
+  .use-grid{grid-template-columns:repeat(2,1fr)}
+  .wk-panel{position:static}
+}
+@media (max-width:680px){
+  body{font-size:16px}
+  .topbar{flex-direction:column;align-items:flex-start}
+  .nav{margin-left:0;justify-content:flex-start}
+  .block-head{padding:22px 20px 16px}.body-pad{padding:20px}
+  .use-grid{grid-template-columns:1fr}
+  .sel-row{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+<link rel="stylesheet" href="../assets/solvanta-course.css" />
 </head>
-<body>
-<a class='skip-link' href='#main-content'>Skip to lesson</a>
-<header class='site-header'><div class='header-inner'><a class='brand-link' href='/' aria-label='Solvanta Consulting home'><span class='brand-mark' aria-hidden='true'><img src='../../../assets/img/logo-icon.svg' alt='' width='48' height='48' /></span><span class='brand-text'><span class='brand-name'>Solvanta Consulting</span></span></a><button class='nav-toggle' type='button' aria-label='Open navigation menu' aria-expanded='false' data-nav-toggle><span aria-hidden='true'></span></button><nav class='site-nav' aria-label='Main navigation' data-nav-menu><a href='/'>Home</a><a href='/courses/'>Courses</a><a href='/about/'>About</a><a href='/contact/'>Contact</a></nav></div></header>
-<main id='main-content' class='module-shell'><div class='module-shellbar'><a class='module-link' href='part-3-buzzword-decoder.html'>Previous lesson</a><div><p>AI Basics for Everyday Users</p><h1>Practical Use</h1></div><a class='module-link' href='assessment.html'>Assessment</a></div><div class='module-frame-wrap'><p class='module-status' data-module-status>Loading lesson...</p><iframe title='Practical Use lesson' data-module-frame hidden></iframe></div></main>
-<script src='../../../assets/js/config.js?v=2'></script><script src='../../../assets/js/main.js'></script><script src='module-loader.js' data-title='Practical Use' data-payload='payloads/part-4-practical-use.html.gz'></script>
+<body class="course-lesson-page">
+<div class="progress" id="progress"></div>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand-link" href="/" aria-label="Solvanta Consulting home">
+<span class="brand-mark" aria-hidden="true"><img src="../../../assets/img/logo-icon.svg" alt="" width="48" height="48" /></span>
+<span class="brand-text"><span class="brand-name">Solvanta Consulting</span></span>
+</a>
+<button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" data-nav-toggle><span aria-hidden="true"></span></button>
+<nav class="site-nav" aria-label="Main navigation" data-nav-menu>
+<a href="/">Home</a><a href="/courses/">Courses</a><a href="/about/">About</a><a href="/contact/">Contact</a>
+</nav>
+</div>
+</header>
+<div class="course-lesson-bar">
+<div class="lesson-bar-inner">
+<a class="lesson-back" href="../">Course overview</a>
+<div class="lesson-meta"><span>AI Basics for Everyday Users</span><strong>Practical Use</strong></div>
+<nav class="nav lesson-section-nav" id="nav" aria-label="Page sections">
+    <a href="#access">How You Use It</a>
+    <a href="#uses">What For</a>
+    <a href="#pricing">Free vs Paid</a>
+    <a href="#build">Build Example</a>
+  </nav>
+<div class="lesson-step-links">
+<a href="part-3-buzzword-decoder.html">Previous lesson</a>
+<a href="assessment.html">Assessment</a>
+</div>
+</div>
+</div>
+<main id="main-content" class="course-content course-content--lesson" data-original-title="What Can AI Actually Do For You? — Part 4">
+<div class="wrap">
+<!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-card">
+      <span class="eyebrow">Part 4 · From understanding to doing</span>
+      <h1>What can AI <span class="hl">actually do for you?</span></h1>
+      <p class="hero-lede">You know how it works — now the practical part. Here's how you actually use tools like ChatGPT, Claude and Gemini, the huge range of things they're good for, what's free versus paid, and exactly where a human still has to step in.</p>
+      <button class="cta" data-jump="#access">Show me how <span class="arr">↓</span></button>
+      <div class="chips">
+        <span class="chip">Chat · Copilot · API</span>
+        <span class="chip g">Real use cases</span>
+        <span class="chip o">Free vs paid</span>
+        <span class="chip a">A worked build</span>
+      </div>
+    </div>
+    <aside class="hero-side">
+      <div class="mini-fact"><div class="mf-num">3</div><div class="mf-lab">ways to reach the same model: a chat app, a copilot inside your tools, or the API.</div></div>
+      <div class="mini-fact g"><div class="mf-num">~$20</div><div class="mf-lab">a month is the going rate for the main paid tier — and the free tiers are genuinely good.</div></div>
+      <div class="mini-fact o"><div class="mf-num">You</div><div class="mf-lab">still own the decisions, the verifying, the accounts and the shipping. AI does the heavy lifting.</div></div>
+    </aside>
+  </section>
+
+  <!-- ACCESS MODES -->
+  <section class="block" id="access">
+    <div class="block-head" data-accent="blue">
+      <span class="kicker">First, a key distinction</span>
+      <h2 class="title"><span class="step-no" data-accent="blue">1</span>Three ways you actually use these tools</h2>
+      <p class="sub">ChatGPT, Claude and Gemini are <em>products</em>; the LLM is the engine inside. You can reach that engine three ways — and the cost and skill needed are very different. Pick one.</p>
+    </div>
+    <div class="body-pad">
+      <div class="sel-tabs" id="accessTabs">
+        <button class="btn-light solid" data-mode="chat">The chat app</button>
+        <button class="btn-light" data-mode="copilot">A copilot in your tools</button>
+        <button class="btn-light" data-mode="api">The API</button>
+      </div>
+      <div class="sel-panel" id="accessPanel" aria-live="polite">
+        <h3 id="accName">The chat app</h3>
+        <p class="sel-lead" id="accLead">You type a question or task into a chat window, and it replies. The simplest way in — no setup, no coding.</p>
+        <div class="sel-row">
+          <div class="sel-box who"><div class="l">Who it's for</div><p id="accWho">Anyone. If you can send a message, you can use it.</p></div>
+          <div class="sel-box cost"><div class="l">What it costs</div><p id="accCost">A free tier, or around $20/month for higher limits and better models.</p></div>
+          <div class="sel-box ex"><div class="l">Example</div><p id="accEx">Asking it to draft an email, summarise a report, or explain a tricky topic.</p></div>
+          <div class="sel-box"><div class="l">In short</div><p id="accShort">The websites and apps most people mean when they say “ChatGPT”.</p></div>
+        </div>
+      </div>
+      <div class="note">Same engine, different doors: the model behind the chat app is the <b>same kind of model</b> a developer calls through the API. What changes is how you reach it, and how you pay.</div>
+    </div>
+  </section>
+
+  <!-- USE-CASE EXPLORER -->
+  <section class="block" id="uses">
+    <div class="block-head" data-accent="green">
+      <span class="kicker">The range</span>
+      <h2 class="title"><span class="step-no" data-accent="green">2</span>What can you actually use it for?</h2>
+      <p class="sub">Far more than chatting. Filter by the kind of work, and tap any card for a concrete example. Each one shows whether it's free-friendly and how much you need to stay involved.</p>
+    </div>
+    <div class="body-pad">
+      <div class="filter-chips" id="useChips"></div>
+      <div class="use-grid" id="useGrid"></div>
+      <div class="note">A pattern you'll notice: AI is strongest at <b>first drafts and heavy lifting</b>. The more a task involves facts, money or judgement, the more you stay in the loop to check and decide.</div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="block" id="pricing">
+    <div class="block-head" data-accent="orange">
+      <span class="kicker">The money question</span>
+      <h2 class="title"><span class="step-no" data-accent="orange">3</span>What's free, and what's paid?</h2>
+      <p class="sub">AI pricing comes in a few clear shapes. Pick a tier to see what it gives you and who it suits — and don't miss the part most people forget: the AI is often the cheapest piece of the puzzle.</p>
+    </div>
+    <div class="body-pad">
+      <div class="disclaimer">
+        <span class="di">!</span>
+        <p>Exact prices and plan names change often. These are the <b>shapes</b>, not a live price list. As of mid-2026, the standard paid tier sits around $20/month across ChatGPT, Claude and Gemini — always check each provider for current rates.</p>
+      </div>
+      <div class="sel-tabs" id="tierTabs">
+        <button class="btn-light solid" data-tier="free">Free tier</button>
+        <button class="btn-light" data-tier="standard">Standard ~$20/mo</button>
+        <button class="btn-light" data-tier="power">Power $100–200/mo</button>
+        <button class="btn-light" data-tier="team">Team &amp; Enterprise</button>
+        <button class="btn-light" data-tier="api">API (pay-per-use)</button>
+      </div>
+      <div class="sel-panel" id="tierPanel" aria-live="polite">
+        <h3 id="tierName">Free tier</h3>
+        <span class="tier-cost" id="tierCost">$0</span>
+        <p class="sel-lead" id="tierWhat">Use the chat apps at no cost, with limits on how much and how fast.</p>
+        <div class="sel-row">
+          <div class="sel-box"><div class="l">What you get</div><p id="tierGet">A capable model with caps on messages, speed and context length; usually a smaller free model.</p></div>
+          <div class="sel-box who"><div class="l">Best for</div><p id="tierBest">Trying it out, light personal use, and learning the ropes.</p></div>
+        </div>
+      </div>
+      <div class="note warn">When you build something real, <b>the AI is often the cheapest part.</b> Budget for hosting, a domain, a database and any third-party services — those usually add up to more than the model itself.</div>
+    </div>
+  </section>
+
+  <!-- BUILD WALKTHROUGH -->
+  <section class="block" id="build">
+    <div class="block-head" data-accent="blue">
+      <span class="kicker">A worked example</span>
+      <h2 class="title"><span class="step-no" data-accent="blue">4</span>Building a simple website, step by step</h2>
+      <p class="sub">Here's where AI helps and where you take over — using a real project. Tap each step to see what AI can do, what you still own, the cost, and the split between the two.</p>
+    </div>
+    <div class="body-pad">
+      <div class="wk-grid">
+        <div class="wk-list" id="wkList"></div>
+        <div class="wk-panel" id="wkPanel" aria-live="polite">
+          <h3 id="wkName">Plan &amp; decide</h3>
+          <span class="wk-cost free" id="wkCost">Free</span>
+          <div class="wk-do">
+            <div class="wd ai"><div class="l">✦ AI can do</div><p id="wkAI">Brainstorm the structure, suggest pages and draft a sitemap.</p></div>
+            <div class="wd you"><div class="l">⌖ You do</div><p id="wkYou">Decide what the site is actually for and what success looks like.</p></div>
+          </div>
+          <div class="split-label">Who does the work here</div>
+          <div class="split"><div class="ai" id="wkSplitAI" style="width:50%">AI 50%</div><div class="you" id="wkSplitYou" style="width:50%">You 50%</div></div>
+          <p class="wk-tools" id="wkTools"><b>Where:</b> any chat app — just talk it through.</p>
+        </div>
+      </div>
+      <div class="note">Notice the correction to a common myth: modern AI can draft <b>both</b> the frontend and a lot of the backend. But you still decide the architecture, review and test the code, create the accounts, buy the domain, deploy it, and answer for whether it's safe and correct.</div>
+    </div>
+  </section>
+
+  <!-- HUMAN ROLE -->
+  <section class="block" id="human">
+    <div class="block-head" data-accent="amber">
+      <span class="kicker">The dividing line</span>
+      <h2 class="title">Where a human is always needed</h2>
+      <p class="sub">A simple way to split the work: let AI handle the language and the heavy lifting, and keep the judgement, the checking and the real-world actions for yourself.</p>
+    </div>
+    <div class="body-pad">
+      <div class="duo">
+        <div class="dcard" data-accent="green">
+          <h3><span class="d-ico">✦</span>AI handles well</h3>
+          <p class="d-sub">Generating and transforming language and ideas you give it.</p>
+          <ul>
+            <li>First drafts of emails, docs, posts and code</li>
+            <li>Summarising, explaining and rewriting</li>
+            <li>Brainstorming options and exploring ideas</li>
+            <li>Translating and reformatting content</li>
+            <li>Speeding up repetitive, low-risk work</li>
+          </ul>
+        </div>
+        <div class="dcard" data-accent="red" style="--ac:var(--red);--ac-soft:var(--red-soft);--ac-bd:var(--red-bd)">
+          <h3><span class="d-ico">⌖</span>You always own</h3>
+          <p class="d-sub">Anything needing judgement, truth, or real-world consequences.</p>
+          <ul>
+            <li>The final decision — and being accountable for it</li>
+            <li>Checking facts, numbers and sources</li>
+            <li>Anything with money, legal or medical stakes</li>
+            <li>Sensitive or confidential data</li>
+            <li>Creating accounts, buying things and deploying to the real world</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note">This is the same thread running through the whole suite: AI predicts and produces; <b>you verify and decide</b>. It's a powerful assistant, not a replacement for your judgement.</div>
+    </div>
+  </section>
+
+  <!-- CLOSE -->
+  <div class="verify" aria-label="The mindset for getting value from AI">
+    <p class="v-head">The mindset that gets real value from AI: <b>it does the heavy lifting, you do the deciding and the shipping</b></p>
+    <p class="v-lede">Start free, use it for first drafts and grunt work, and stay in charge of the parts that matter.</p>
+    <div class="verify-row">
+      <div class="v-item"><span class="v-ico">◷</span><div><b>Start free, upgrade when it pays</b><span>Only move to a paid tier once the free limits genuinely slow you down.</span></div></div>
+      <div class="v-item"><span class="v-ico">✦</span><div><b>Let it draft, then you refine</b><span>Treat every output as a strong first draft to check and improve.</span></div></div>
+      <div class="v-item"><span class="v-ico">⌖</span><div><b>Keep the last mile human</b><span>Decisions, accounts, payments and shipping stay with you.</span></div></div>
+    </div>
+  </div>
+<nav class="course-module-bottom" aria-label="Lesson navigation">
+<a href="part-3-buzzword-decoder.html">Previous lesson</a>
+<a href="assessment.html">Assessment</a>
+<a href="../">Course overview</a>
+</nav>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container footer-layout">
+<div class="footer-brand">
+<p class="footer-title">Solvanta Consulting</p>
+<p class="muted">Free practical learning resources, with certificates only where they fit the course.</p>
+</div>
+<div>
+<h3>Site</h3>
+<nav class="footer-links" aria-label="Footer site links">
+<a data-footer-link href="/courses/">Courses</a>
+<a data-footer-link href="/about/">About</a>
+<a data-footer-link href="/contact/">Contact</a>
+<a data-footer-link href="/verify/">Certificate lookup</a>
+</nav>
+</div>
+<div>
+<h3>Policies</h3>
+<nav class="footer-links" aria-label="Footer policy links">
+<a data-footer-link href="/privacy-policy/">Privacy Policy</a>
+<a data-footer-link href="/terms/">Terms of Use</a>
+<a data-footer-link href="/certificate-policy/">Certificate Policy</a>
+<a data-footer-link href="/data-deletion/">Data Deletion</a>
+</nav>
+</div>
+</div>
+<div class="container footer-bottom">&copy; <span data-current-year></span> Solvanta Consulting. All rights reserved.</div>
+</footer>
+<script src="../../../assets/js/config.js?v=2"></script>
+<script src="../../../assets/js/main.js"></script>
+<script>
+/* ===================== Shared: progress + jump + nav ===================== */
+const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{const h=document.documentElement;progress.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100)+'%';},{passive:true});
+document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>{const el=document.querySelector(b.dataset.jump);if(el)el.scrollIntoView({behavior:'smooth'});}));
+const navLinks=[...document.querySelectorAll('#nav a')],navMap={};
+navLinks.forEach(a=>navMap[a.getAttribute('href').slice(1)]=a);
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){navLinks.forEach(a=>a.classList.remove('active'));const a=navMap[e.target.id];if(a)a.classList.add('active');}});},{rootMargin:'-45% 0px -50% 0px'});
+  ['access','uses','pricing','build'].forEach(id=>{const s=document.getElementById(id);if(s)io.observe(s);});
+}
+
+/* ===================== Access modes ===================== */
+const ACCESS={
+  chat:{name:'The chat app',lead:'You type a question or task into a chat window, and it replies. The simplest way in — no setup, no coding.',who:'Anyone. If you can send a message, you can use it.',cost:'A free tier, or around $20/month for higher limits and better models.',ex:'Asking it to draft an email, summarise a report, or explain a tricky topic.',short:'The websites and apps most people mean when they say “ChatGPT”.'},
+  copilot:{name:'A copilot in your tools',lead:'The same kind of model, built right into apps you already use — your email, documents, spreadsheets or code editor.',who:'People who want AI suggestions where they already work.',cost:'Usually bundled into a subscription for that tool or suite.',ex:'Draft-and-rewrite in your inbox, formula help in a spreadsheet, or code suggestions in an editor.',short:'AI that comes to your work, instead of you going to a chat window.'},
+  api:{name:'The API',lead:'Developers wire the model directly into their own software, so it runs behind the scenes of an app or website.',who:'Developers and companies building their own products.',cost:'Pay-per-token — billed by how much text it processes, not a flat fee. Often a free tier for testing.',ex:'A support chatbot or smart search on a company website, powered by the model invisibly.',short:'The model as a building block inside something you create.'}
+};
+const accName=document.getElementById('accName'),accLead=document.getElementById('accLead'),accWho=document.getElementById('accWho'),accCost=document.getElementById('accCost'),accEx=document.getElementById('accEx'),accShort=document.getElementById('accShort');
+function setAccess(m){
+  const d=ACCESS[m];
+  document.querySelectorAll('#accessTabs .btn-light').forEach(b=>b.classList.toggle('solid',b.dataset.mode===m));
+  accName.textContent=d.name;accLead.textContent=d.lead;accWho.textContent=d.who;accCost.textContent=d.cost;accEx.textContent=d.ex;accShort.textContent=d.short;
+}
+document.querySelectorAll('#accessTabs .btn-light').forEach(b=>b.addEventListener('click',()=>setAccess(b.dataset.mode)));
+setAccess('chat');
+
+/* ===================== Use-case explorer ===================== */
+const UCAT={words:{n:'Words & writing',a:'blue'},know:{n:'Knowledge & research',a:'green'},make:{n:'Make & build',a:'orange'},do:{n:'Get things done',a:'amber'}};
+const USES=[
+  {t:'Draft & edit writing',c:'words',cost:'free',role:'review',ex:'Turn rough notes into a polished email or message — then you check the tone and facts.'},
+  {t:'Summarise long content',c:'words',cost:'free',role:'review',ex:'Condense a 20-page report or a meeting transcript into the key points.'},
+  {t:'Translate & change tone',c:'words',cost:'free',role:'review',ex:'Translate a message into another language, or rewrite it to sound more formal.'},
+  {t:'Convert formats',c:'words',cost:'free',role:'review',ex:'Turn messy notes into a clean table, or bullet points into a first-draft slide outline.'},
+  {t:'Draft documents & reports',c:'words',cost:'free',role:'review',ex:'Produce a first draft of a proposal, memo or policy for you to refine.'},
+  {t:'Explain & learn',c:'know',cost:'free',role:'light',ex:'Explain a concept simply at any level, or quiz you while you study.'},
+  {t:'Analyse text & data',c:'know',cost:'paid',role:'review',ex:'Spot themes in customer feedback, or read and interpret a chart you upload.'},
+  {t:'Research a topic',c:'know',cost:'free',role:'own',ex:'Gather and compare options quickly — then verify the facts and sources yourself.'},
+  {t:'Write & debug code',c:'make',cost:'free',role:'own',ex:'Generate a working script and explain it; you still test, review and secure it.'},
+  {t:'Create image drafts',c:'make',cost:'paid',role:'review',ex:'Generate mockups, icons or social images as a starting point to refine.'},
+  {t:'Build a product feature',c:'make',cost:'paid',role:'own',ex:'Power a chatbot or smart search inside your own app through the API.'},
+  {t:'Plan & organise',c:'do',cost:'free',role:'light',ex:'Draft a project outline, schedule or checklist for you to adjust.'},
+  {t:'Brainstorm ideas',c:'do',cost:'free',role:'light',ex:'Generate names, angles or options when you need a starting point.'},
+  {t:'Automate routine tasks',c:'do',cost:'paid',role:'own',ex:'With connected tools, handle repetitive steps — with a human approving anything risky.'}
+];
+const COSTB={free:['Free-friendly','free'],paid:['Paid for scale','paid']};
+const ROLEB={light:['Light review','light'],review:['Review needed','review'],own:['You decide & verify','own']};
+const useGrid=document.getElementById('useGrid'),useChips=document.getElementById('useChips');
+let useCat='all';
+function renderUses(){
+  useGrid.innerHTML=USES.map(u=>{
+    const m=UCAT[u.c],cb=COSTB[u.cost],rb=ROLEB[u.role];
+    return '<div class="ucard" role="button" tabindex="0" data-cat="'+u.c+'" data-accent="'+m.a+'">'
+      +'<span class="uc-tag">'+m.n+'</span><h4>'+u.t+'</h4>'
+      +'<div class="badges"><span class="badge '+cb[1]+'">'+cb[0]+'</span><span class="badge '+rb[1]+'">'+rb[0]+'</span></div>'
+      +'<p class="uc-ex">Example — '+u.ex+'</p>'
+      +'<span class="uc-more">Tap for an example →</span></div>';
+  }).join('');
+  useGrid.querySelectorAll('.ucard').forEach(c=>{
+    const toggle=()=>{const o=c.classList.toggle('open');c.querySelector('.uc-more').textContent=o?'Show less ↑':'Tap for an example →';};
+    c.addEventListener('click',toggle);
+    c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
+  });
+}
+function buildUseChips(){
+  let html='<button class="fchip active" data-cat="all">All</button>';
+  Object.keys(UCAT).forEach(k=>{html+='<button class="fchip" data-cat="'+k+'">'+UCAT[k].n+'</button>';});
+  useChips.innerHTML=html;
+  useChips.querySelectorAll('.fchip').forEach(ch=>ch.addEventListener('click',()=>{
+    useCat=ch.dataset.cat;
+    useChips.querySelectorAll('.fchip').forEach(x=>x.classList.toggle('active',x===ch));
+    useGrid.querySelectorAll('.ucard').forEach(c=>c.classList.toggle('hide',!(useCat==='all'||c.dataset.cat===useCat)));
+  }));
+}
+renderUses();buildUseChips();
+
+/* ===================== Pricing tiers ===================== */
+const TIERS={
+  free:{name:'Free tier',cost:'$0',what:'Use the chat apps at no cost, with limits on how much and how fast.',get:'A capable model with caps on messages, speed and context length; usually a smaller free model. Some free tiers now show ads.',best:'Trying it out, light personal use, and learning the ropes.'},
+  standard:{name:'Standard subscription',cost:'~$20 / month',what:'The mainstream paid plan — the sweet spot for most people.',get:'The flagship model, much higher limits, and extras like voice, image generation, file uploads and a longer memory.',best:'Most regular users and professionals using AI through chat every day.'},
+  power:{name:'Power tiers',cost:'$100–200 / month',what:'Heavy-use plans for people who hit the standard limits constantly.',get:'Far higher usage allowances and access to the most capable models.',best:'Developers and power users who lean on AI for hours every day.'},
+  team:{name:'Team & Enterprise',cost:'~$25–30 / user · custom',what:'Plans built for organisations rather than individuals.',get:'Admin controls, stronger security, “your data isn\'t used for training” guarantees, and shared workspaces.',best:'Companies that need control, security and compliance across many people.'},
+  api:{name:'API · pay-per-use',cost:'priced per million tokens',what:'For building AI into your own software, rather than chatting.',get:'Direct model access billed by how much text it processes — no flat monthly fee. Cheap for small jobs, scales with volume.',best:'Developers and products. Most people never touch this directly.'}
+};
+const tierName=document.getElementById('tierName'),tierCost=document.getElementById('tierCost'),tierWhat=document.getElementById('tierWhat'),tierGet=document.getElementById('tierGet'),tierBest=document.getElementById('tierBest');
+function setTier(t){
+  const d=TIERS[t];
+  document.querySelectorAll('#tierTabs .btn-light').forEach(b=>b.classList.toggle('solid',b.dataset.tier===t));
+  tierName.textContent=d.name;tierCost.textContent=d.cost;tierWhat.textContent=d.what;tierGet.textContent=d.get;tierBest.textContent=d.best;
+}
+document.querySelectorAll('#tierTabs .btn-light').forEach(b=>b.addEventListener('click',()=>setTier(b.dataset.tier)));
+setTier('free');
+
+/* ===================== Website build walkthrough ===================== */
+const STEPS=[
+  {t:'Plan & decide',cost:'free',ai:'Brainstorm the structure, suggest pages, and draft a sitemap.',you:'Decide what the site is actually for and what success looks like.',sai:50,tools:'any chat app — just talk it through.'},
+  {t:'Write the content',cost:'free',ai:'Draft and polish all the words — headlines, page copy, product text.',you:'Check facts, keep your brand voice, and approve what goes live.',sai:75,tools:'a chat app, free or ~$20/month for heavier use.'},
+  {t:'Design & frontend',cost:'mix',ai:'Generate working frontend code and components, and suggest layouts.',you:'Review, tweak the look, and choose what fits your brand.',sai:70,tools:'AI coding assistants and design tools.'},
+  {t:'Backend & logic',cost:'mix',ai:'Write a lot of the backend code — forms, logins, logic — and explain it.',you:'Decide the architecture, then review, test, debug and secure it.',sai:55,tools:'AI coding assistants; you run and test the code.'},
+  {t:'Database',cost:'paid',ai:'Design the data structure and write the queries to read and write it.',you:'Create the database account and manage the real data and privacy.',sai:50,tools:'a hosted database service (usually paid).'},
+  {t:'Connect services (APIs)',cost:'mix',ai:'Write the integration code for payments, email, maps and more.',you:'Create the accounts, get the API keys, and handle billing and secrets.',sai:45,tools:'third-party services, each with its own free or paid plan.'},
+  {t:'Get a domain',cost:'paid',ai:'Suggest available names and sense-check them for clarity and SEO.',you:'Actually buy it — AI can\'t create the account or pay for you.',sai:15,tools:'a domain registrar; a yearly fee.'},
+  {t:'Deploy & host',cost:'mix',ai:'Write the deploy configuration and walk you through putting it live.',you:'Set up the hosting account, manage secrets, and run the deployment.',sai:40,tools:'a hosting platform, free tiers up to paid plans.'},
+  {t:'Test, secure & maintain',cost:'paid',ai:'Help debug issues, review code, and suggest fixes and improvements.',you:'Own the testing, the security, and accountability over time.',sai:40,tools:'ongoing — your responsibility as the owner.'}
+];
+const COSTLABEL={free:'Free',mix:'Free → Paid',paid:'Paid'};
+const wkList=document.getElementById('wkList');
+const wkName=document.getElementById('wkName'),wkCost=document.getElementById('wkCost'),wkAI=document.getElementById('wkAI'),wkYou=document.getElementById('wkYou'),wkSplitAI=document.getElementById('wkSplitAI'),wkSplitYou=document.getElementById('wkSplitYou'),wkTools=document.getElementById('wkTools');
+wkList.innerHTML=STEPS.map((s,i)=>'<button class="wk-step" data-i="'+i+'"><span class="wn">'+(i+1)+'</span><span class="wt">'+s.t+'</span></button>').join('');
+function setStep(i){
+  const s=STEPS[i];
+  wkList.querySelectorAll('.wk-step').forEach(b=>b.classList.toggle('active',+b.dataset.i===i));
+  wkName.textContent=s.t;
+  wkCost.textContent=COSTLABEL[s.cost];wkCost.className='wk-cost '+s.cost;
+  wkAI.textContent=s.ai;wkYou.textContent=s.you;
+  wkSplitAI.style.width=s.sai+'%';wkSplitAI.textContent='AI '+s.sai+'%';
+  wkSplitYou.style.width=(100-s.sai)+'%';wkSplitYou.textContent='You '+(100-s.sai)+'%';
+  wkTools.innerHTML='<b>Where:</b> '+s.tools;
+}
+wkList.querySelectorAll('.wk-step').forEach(b=>b.addEventListener('click',()=>setStep(+b.dataset.i)));
+setStep(0);
+</script>
 </body>
 </html>

@@ -1,16 +1,707 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-<meta charset='UTF-8' />
-<meta name='viewport' content='width=device-width, initial-scale=1.0' />
-<title>AI in the Real World | AI Basics for Everyday Users</title>
-<link rel='stylesheet' href='../../../assets/css/styles.css' />
-<style>.module-shell{min-height:calc(100vh - var(--header-height));background:var(--color-soft)}.module-shellbar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center;padding:14px 24px;border-bottom:1px solid var(--color-border);background:#fff}.module-shellbar h1{margin:0;font-family:var(--font-body);font-size:1rem;line-height:1.25;letter-spacing:0;font-weight:800}.module-shellbar p{margin:0;color:var(--color-muted);font-size:.88rem}.module-link{color:var(--color-primary);font-weight:800;text-decoration:none}.module-frame-wrap{height:calc(100vh - var(--header-height) - 74px);min-height:660px;background:#fff}.module-frame-wrap iframe{display:block;width:100%;height:100%;border:0;background:#fff}.module-status{margin:0;padding:30px;color:var(--color-muted)}@media(max-width:720px){.module-shellbar{grid-template-columns:1fr;gap:8px;padding:14px 16px}.module-frame-wrap{height:calc(100vh - 180px);min-height:620px}}</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI in the Real World | AI Basics for Everyday Users | Solvanta Consulting</title>
+<meta name="description" content="How models connect to data, tools, workflows, agents, deployment choices, and human approval." />
+<link rel="stylesheet" href="../../../assets/css/styles.css" />
+<style>
+/* ============ Tokens (shared with Part 1) ============ */
+:root{
+  --paper:#FFFFFF;
+  --ink:#1F1B2D;
+  --ink-soft:#3F3A4D;
+  --muted:#6F6A7A;
+  --line:#E8DED4;
+  --line-2:#DED1C4;
+  --bg-1:#FAF7F2;
+  --bg-2:#F3EADF;
+
+  --blue:#9A4F2F;  --blue-soft:#F3EADF;  --blue-bd:#E8DED4;
+  --green:#15A24A; --green-soft:#E7F6EC; --green-bd:#C7E8D3;
+  --orange:#E4691C;--orange-soft:#FCEEE3;--orange-bd:#F4D3BC;
+  --amber:#CC8A0A; --amber-soft:#FCF1D9; --amber-bd:#F0DCA8;
+  --red:#D33A2C;   --red-soft:#FCE9E7;   --red-bd:#F3C9C3;
+  --marker:#FCE38A;
+
+  --mono:Consolas,"SF Mono","Courier New",monospace;
+  --shadow-sm:0 4px 14px rgba(31,27,45,.06);
+  --shadow-md:0 16px 40px rgba(31,27,45,.08);
+  --shadow-lg:0 30px 64px rgba(154,79,47,.13);
+  --r:18px; --r-sm:13px;
+}
+[data-accent="blue"]{--ac:var(--blue);--ac-soft:var(--blue-soft);--ac-bd:var(--blue-bd)}
+[data-accent="green"]{--ac:var(--green);--ac-soft:var(--green-soft);--ac-bd:var(--green-bd)}
+[data-accent="orange"]{--ac:var(--orange);--ac-soft:var(--orange-soft);--ac-bd:var(--orange-bd)}
+[data-accent="amber"]{--ac:var(--amber);--ac-soft:var(--amber-soft);--ac-bd:var(--amber-bd)}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:Aptos,Calibri,Arial,sans-serif;font-size:17px;line-height:1.55;color:var(--ink);
+  background:
+    radial-gradient(1100px 460px at 4% -10%,rgba(154,79,47,.07),transparent 60%),
+    radial-gradient(900px 420px at 104% -2%,rgba(204,138,10,.07),transparent 55%),
+    linear-gradient(180deg,var(--bg-1),var(--bg-2));
+  background-attachment:fixed;
+}
+button,input{font-family:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid rgba(154,79,47,.45);outline-offset:2px;border-radius:8px}
+
+/* ============ Progress + top bar ============ */
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--blue),var(--green));z-index:60;transition:width .1s linear}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:18px;padding:13px clamp(16px,4vw,44px);background:rgba(245,248,253,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(232,222,212,.7)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.logo-mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(140deg,#9A4F2F,#5F2E1F);color:#fff;font-size:15px;font-weight:900;box-shadow:0 8px 18px rgba(154,79,47,.3)}
+.part-tag{font-size:11px;font-weight:900;color:var(--blue);background:var(--blue-soft);border:1px solid var(--blue-bd);padding:3px 8px;border-radius:999px;letter-spacing:.04em}
+.nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.nav a{color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:700;padding:7px 11px;border-radius:999px;transition:background .15s,color .15s}
+.nav a:hover{background:#fff;color:var(--blue);box-shadow:var(--shadow-sm)}
+.nav a.active{background:var(--blue-soft);color:var(--blue)}
+
+/* ============ Layout ============ */
+.wrap{width:min(1200px,calc(100% - 40px));margin:0 auto;padding:30px 0 90px}
+.block{margin-top:30px;scroll-margin-top:84px;background:rgba(255,255,255,.8);border:1px solid rgba(232,222,212,.85);border-radius:var(--r);box-shadow:var(--shadow-md);overflow:hidden}
+.block-head{padding:26px 30px 18px;border-bottom:1px solid var(--line)}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:900;letter-spacing:.11em;text-transform:uppercase;color:var(--ac,var(--blue));background:var(--ac-soft,var(--blue-soft));border:1px solid var(--ac-bd,var(--blue-bd));padding:6px 11px;border-radius:999px;margin-bottom:14px}
+.step-no{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:var(--ac);color:#fff;font-weight:900;font-size:15px;margin-right:10px;vertical-align:-7px}
+h2.title{margin:0;font-size:clamp(25px,3vw,38px);line-height:1.04;letter-spacing:-.04em}
+.sub{margin:9px 0 0;color:var(--muted);max-width:820px;font-size:clamp(15px,1.4vw,18px)}
+.body-pad{padding:24px 30px 28px}
+
+/* ============ Hero ============ */
+.hero{display:grid;grid-template-columns:1.12fr .88fr;gap:24px;margin-bottom:4px}
+.hero-card{position:relative;overflow:hidden;background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r);box-shadow:var(--shadow-lg);padding:clamp(28px,4vw,54px)}
+.hero-card::after{content:"";position:absolute;right:-90px;bottom:-110px;width:240px;height:240px;border-radius:999px;background:radial-gradient(circle,var(--amber) 0 30%,transparent 31%);opacity:.14}
+.hero-card::before{content:"";position:absolute;right:26%;top:-70px;width:150px;height:150px;border-radius:999px;background:radial-gradient(circle,var(--blue) 0 34%,transparent 35%);opacity:.12}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:900;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);background:var(--blue-soft);border:1px solid var(--blue-bd);padding:7px 12px;border-radius:999px;margin-bottom:18px}
+h1{font-size:clamp(38px,5.6vw,70px);line-height:.97;margin:0 0 18px;letter-spacing:-.055em}
+.hl{background:linear-gradient(transparent 60%,var(--marker) 60%);padding:0 .06em;border-radius:3px}
+.hero-lede{font-size:clamp(17px,1.8vw,21px);color:var(--ink-soft);margin:0 0 24px;max-width:660px}
+.cta{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(140deg,#9A4F2F,#5F2E1F);color:#fff;border:none;border-radius:999px;padding:13px 22px;font-weight:800;font-size:16px;box-shadow:0 14px 30px rgba(154,79,47,.3);transition:transform .15s,box-shadow .15s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 20px 40px rgba(154,79,47,.36)}
+.cta .arr{transition:transform .18s}.cta:hover .arr{transform:translateY(2px)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.chip{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:8px 13px;font-weight:800;font-size:13px;border:1px solid var(--line-2);background:#fff}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.chip.g::before{background:var(--green)}.chip.o::before{background:var(--orange)}.chip.a::before{background:var(--amber)}
+.hero-side{display:grid;gap:14px;align-content:start}
+.mini-fact{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:var(--r-sm);padding:20px;box-shadow:var(--shadow-sm)}
+.mini-fact .mf-num{font-family:var(--mono);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--blue)}
+.mini-fact .mf-lab{color:var(--ink-soft);font-size:15px;margin-top:4px;font-weight:600}
+.mini-fact.g .mf-num{color:var(--green)}.mini-fact.o .mf-num{color:var(--orange)}
+
+/* ============ Generic cards / note / pipe ============ */
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.cards-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.cards-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:20px}
+.card[data-accent]{border-top:4px solid var(--ac)}
+.card .c-ico{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:19px;background:var(--ac-soft,var(--blue-soft));color:var(--ac,var(--blue));margin-bottom:11px;font-weight:900}
+.card .c-tag{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+.card h3{margin:3px 0 7px;font-size:clamp(18px,1.8vw,22px);letter-spacing:-.03em}
+.card p{margin:0;color:var(--ink-soft);font-size:15px}
+.note{margin:20px 0 0;padding:14px 16px;border-radius:var(--r-sm);background:var(--blue-soft);border:1px solid var(--blue-bd);color:#163a86;font-weight:650;font-size:15.5px}
+.note b{color:var(--blue)}
+.note.warn{background:var(--orange-soft);border-color:var(--orange-bd);color:#8a3a12}.note.warn b{color:var(--orange)}
+.pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.pipe-step{position:relative;text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:18px 18px 16px;border-top:4px solid var(--ac);transition:transform .15s,box-shadow .15s}
+.pipe-step:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.pipe-step .pn{font-family:var(--mono);font-weight:800;color:var(--ac);font-size:14px}
+.pipe-step h4{margin:6px 0 4px;font-size:19px;letter-spacing:-.02em}
+.pipe-step p{margin:0;color:var(--muted);font-size:14px}
+
+/* ============ Buttons ============ */
+.btn-row{display:flex;gap:9px;flex-wrap:wrap}
+.btn-light{border:1px solid var(--line-2);background:#fff;color:var(--ink);border-radius:999px;padding:10px 16px;font-weight:800;font-size:14px;transition:border-color .15s,transform .15s,background .15s}
+.btn-light:hover:not(:disabled){border-color:var(--blue);transform:translateY(-1px)}
+.btn-light.solid{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn-light.solid:hover:not(:disabled){background:#7D3F27}
+.btn-light:disabled{opacity:.45;cursor:not-allowed}
+
+/* ============ Sec 1 · Nesting scope ============ */
+.scope-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:20px;align-items:start}
+.layer{border:2px solid var(--line-2);border-radius:18px;padding:15px 15px 16px;background:#fff;cursor:pointer;transition:border-color .15s,background .15s,box-shadow .15s;text-align:left;width:100%}
+.layer .layer-label{display:flex;align-items:center;gap:9px;font-weight:900;font-size:15px;letter-spacing:-.01em}
+.layer .layer-label .dotc{width:11px;height:11px;border-radius:50%;background:var(--ac);flex:none}
+.layer .layer-label .lt{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:800;margin-left:auto}
+.layer.active{border-color:var(--ac);background:var(--ac-soft);box-shadow:0 12px 28px rgba(31,27,45,.1)}
+.layer-inner{margin-top:13px}
+.layer.leaf{display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;font-weight:900}
+.scope-panel{border:1px solid var(--line);border-radius:var(--r-sm);background:#FFFDFC;padding:24px;position:sticky;top:96px}
+.scope-panel .sp-kick{display:inline-flex;font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ac);background:var(--ac-soft);border:1px solid var(--ac-bd);padding:5px 10px;border-radius:999px}
+.scope-panel h3{margin:12px 0 8px;font-size:clamp(23px,2.4vw,30px);letter-spacing:-.035em}
+.scope-panel .sp-def{margin:0;font-size:17px;color:var(--ink-soft);line-height:1.55}
+.sp-row{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:16px}
+.sp-box{border:1px solid var(--line);border-radius:12px;padding:13px 14px;background:#fff}
+.sp-box .l{font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.sp-box.adds .l{color:var(--green)}.sp-box.ex .l{color:var(--blue)}
+.sp-box p{margin:0;font-size:14.5px;color:var(--ink-soft)}
+
+/* ============ Sec 2 · Data router ============ */
+.router-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:20px;align-items:start}
+.router-modes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.router-stage{position:relative;min-height:380px;border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;background:
+  linear-gradient(90deg,rgba(232,222,212,.4) 1px,transparent 1px),
+  linear-gradient(180deg,rgba(232,222,212,.4) 1px,transparent 1px),#FFFDFC;background-size:44px 44px}
+.router-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.route-line{fill:none;stroke:var(--ac,var(--blue));stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+.rnode{position:absolute;z-index:2;transform:translate(-50%,-50%);width:130px;border:1px solid var(--line-2);background:#fff;border-radius:13px;padding:11px 12px;box-shadow:0 8px 20px rgba(31,27,45,.08);transition:opacity .18s,border-color .18s,box-shadow .18s;text-align:left}
+.rnode .rn-ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-weight:900;font-size:15px;margin-bottom:7px}
+.rnode .rn-t{font-weight:900;font-size:14px;letter-spacing:-.02em;line-height:1.1}
+.rnode .rn-s{font-size:11.5px;color:var(--muted);margin-top:2px;font-weight:650}
+.rnode[data-node="user"] .rn-ic{background:var(--blue-soft);color:var(--blue)}
+.rnode[data-node="llm"] .rn-ic{background:#1F1B2D;color:#fff}
+.rnode[data-node="store"] .rn-ic{background:var(--green-soft);color:var(--green)}
+.rnode[data-node="mcp"] .rn-ic{background:var(--orange-soft);color:var(--orange)}
+.rnode.dim{opacity:.32}
+.rnode.lit{border-color:var(--ac);box-shadow:0 12px 26px rgba(31,27,45,.16)}
+.route-dot{fill:var(--ac,var(--blue));stroke:#fff;stroke-width:2}
+.router-panel{border:1px solid var(--line);border-radius:var(--r-sm);background:#FFFDFC;padding:22px}
+.router-panel h3{margin:0 0 7px;font-size:21px;letter-spacing:-.03em}
+.router-panel .rp-desc{margin:0 0 16px;color:var(--ink-soft);font-size:15px}
+.expo{display:grid;gap:10px}
+.expo-item{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:#fff;font-size:14px;font-weight:700;color:var(--ink-soft)}
+.pill{font-weight:900;font-size:12px;padding:5px 10px;border-radius:999px}
+.pill.ok{background:var(--green-soft);color:var(--green)}
+.pill.mid{background:var(--amber-soft);color:var(--amber)}
+.pill.bad{background:var(--red-soft);color:var(--red)}
+
+/* ============ Sec 3 · Workflow ============ */
+.wf-scenario{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:#FFFDFC;border-radius:var(--r-sm);padding:14px 16px;margin-bottom:14px}
+.wf-scenario .ws-ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue);font-weight:900;font-size:18px;flex:none}
+.wf-scenario b{font-size:16px}.wf-scenario span{color:var(--muted);font-size:14px;display:block}
+.wf-controls{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px}
+.wf-timeline{border-left:2px solid var(--line);margin-left:12px;padding-left:0;min-height:120px}
+.wf-step{position:relative;padding:11px 0 11px 28px;opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s}
+.wf-step.show{opacity:1;transform:none}
+.wf-step::before{content:"";position:absolute;left:-7px;top:16px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--line-2)}
+.wf-step .wf-t{font-weight:750;font-size:15.5px;color:var(--ink-soft)}
+.wf-step .wf-badge{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;margin-left:8px;vertical-align:1px}
+.wf-step.running::before{border-color:var(--blue);background:var(--blue);box-shadow:0 0 0 4px var(--blue-soft)}
+.wf-step.running .wf-badge{background:var(--blue-soft);color:var(--blue)}
+.wf-step.done::before{border-color:var(--green);background:var(--green)}
+.wf-step.done .wf-badge{background:var(--green-soft);color:var(--green)}
+.wf-step.warn::before{border-color:var(--amber);background:var(--amber)}
+.wf-step.warn .wf-badge{background:var(--amber-soft);color:var(--amber)}
+.wf-step.fail::before{border-color:var(--red);background:var(--red)}
+.wf-step.fail .wf-badge{background:var(--red-soft);color:var(--red)}
+.wf-step.fail .wf-t{color:var(--red)}
+.wf-gate{margin:6px 0 6px 28px;padding:16px;border-radius:var(--r-sm);background:var(--red-soft);border:1px solid var(--red-bd);display:none}
+.wf-gate.show{display:block}
+.wf-gate b{color:var(--red);display:block;margin-bottom:3px}
+.wf-gate p{margin:0 0 12px;color:#7a241c;font-size:14.5px}
+.wf-approve{border:none;background:var(--red);color:#fff;border-radius:999px;padding:10px 18px;font-weight:800;font-size:14px;transition:transform .15s,background .15s}
+.wf-approve:hover{transform:translateY(-1px);background:#b8281c}
+.wf-result{margin-top:16px;padding:14px 16px;border-radius:var(--r-sm);font-size:15px;font-weight:650;display:none}
+.wf-result.show{display:block}
+.wf-result.ok{background:var(--green-soft);border:1px solid var(--green-bd);color:#0c6b34}
+.wf-result.stop{background:var(--red-soft);border:1px solid var(--red-bd);color:#8a241c}
+
+/* ============ Sec 4 · Deployment matrix ============ */
+.matrix-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:20px;align-items:start}
+.deploy-list{display:grid;gap:9px}
+.dbtn{border:1px solid var(--line-2);background:#fff;border-radius:12px;padding:13px 15px;text-align:left;transition:transform .15s,border-color .15s,background .15s}
+.dbtn .db-t{font-weight:850;font-size:15px;letter-spacing:-.02em}
+.dbtn .db-s{display:block;color:var(--muted);font-size:12.5px;font-weight:650;margin-top:2px}
+.dbtn:hover{border-color:var(--blue);transform:translateX(3px)}
+.dbtn.active{border-color:var(--blue);background:var(--blue-soft);transform:translateX(3px)}
+.gauges{border:1px solid var(--line);border-radius:var(--r-sm);background:#FFFDFC;padding:22px}
+.gauge{margin-bottom:16px}
+.gauge:last-of-type{margin-bottom:0}
+.gauge .g-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:7px}
+.gauge .g-name{font-weight:800;font-size:14.5px}
+.gauge .g-name .g-hint{color:var(--muted);font-weight:650;font-size:12px;margin-left:6px}
+.gauge .g-lvl{font-family:var(--mono);font-weight:800;font-size:13px;color:var(--muted)}
+.g-track{height:13px;border-radius:7px;background:#F3EADF;overflow:hidden}
+.g-track i{display:block;height:100%;border-radius:7px;width:0;transition:width .5s ease}
+.gauge.good .g-track i{background:linear-gradient(90deg,var(--green),#43c172)}
+.gauge.bad .g-track i{background:linear-gradient(90deg,var(--amber),var(--orange))}
+.trade{margin-top:18px;padding:13px 15px;border-radius:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);color:var(--ink-soft);font-size:14.5px;font-weight:650}
+
+/* ============ Verify strip ============ */
+.verify{margin-top:30px;border:1px solid var(--line-2);border-radius:var(--r);background:#fff;box-shadow:var(--shadow-sm);padding:20px 24px}
+.verify .v-head{font-size:clamp(19px,2vw,24px);letter-spacing:-.03em;margin:0 0 4px}
+.verify .v-head b{color:var(--blue)}
+.verify .v-lede{margin:0 0 16px;color:var(--muted);font-size:15px}
+.verify-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.v-item{display:flex;gap:11px;align-items:flex-start}
+.v-ico{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-weight:900;flex:none}
+.v-item:nth-child(1) .v-ico{background:var(--blue-soft);color:var(--blue)}
+.v-item:nth-child(2) .v-ico{background:var(--green-soft);color:var(--green)}
+.v-item:nth-child(3) .v-ico{background:var(--amber-soft);color:var(--amber)}
+.v-item b{display:block;font-size:14.5px;margin-bottom:1px}
+.v-item span{color:var(--muted);font-size:13.5px;line-height:1.4}
+
+/* ============ Responsive ============ */
+@media (max-width:1000px){
+  .hero,.scope-grid,.router-grid,.matrix-grid,.cards-3,.cards-2,.cards-4,.verify-row{grid-template-columns:1fr}
+  .pipe{grid-template-columns:1fr 1fr}
+  .scope-panel{position:static}
+  .router-stage{min-height:440px}
+}
+@media (max-width:680px){
+  body{font-size:16px}
+  .topbar{flex-direction:column;align-items:flex-start}
+  .nav{margin-left:0;justify-content:flex-start}
+  .block-head{padding:22px 20px 16px}.body-pad{padding:20px}
+  .pipe{grid-template-columns:1fr}
+  .sp-row{grid-template-columns:1fr}
+  .router-stage{min-height:520px}.rnode{width:112px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+</style>
+<link rel="stylesheet" href="../assets/solvanta-course.css" />
 </head>
-<body>
-<a class='skip-link' href='#main-content'>Skip to lesson</a>
-<header class='site-header'><div class='header-inner'><a class='brand-link' href='/' aria-label='Solvanta Consulting home'><span class='brand-mark' aria-hidden='true'><img src='../../../assets/img/logo-icon.svg' alt='' width='48' height='48' /></span><span class='brand-text'><span class='brand-name'>Solvanta Consulting</span></span></a><button class='nav-toggle' type='button' aria-label='Open navigation menu' aria-expanded='false' data-nav-toggle><span aria-hidden='true'></span></button><nav class='site-nav' aria-label='Main navigation' data-nav-menu><a href='/'>Home</a><a href='/courses/'>Courses</a><a href='/about/'>About</a><a href='/contact/'>Contact</a></nav></div></header>
-<main id='main-content' class='module-shell'><div class='module-shellbar'><a class='module-link' href='part-1-how-ai-works.html'>Previous lesson</a><div><p>AI Basics for Everyday Users</p><h1>AI in the Real World</h1></div><a class='module-link' href='part-3-buzzword-decoder.html'>Next lesson</a></div><div class='module-frame-wrap'><p class='module-status' data-module-status>Loading lesson...</p><iframe title='AI in the Real World lesson' data-module-frame hidden></iframe></div></main>
-<script src='../../../assets/js/config.js?v=2'></script><script src='../../../assets/js/main.js'></script><script src='module-loader.js' data-title='AI in the Real World' data-payload='payloads/part-2-real-world.html.gz'></script>
+<body class="course-lesson-page">
+<div class="progress" id="progress"></div>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand-link" href="/" aria-label="Solvanta Consulting home">
+<span class="brand-mark" aria-hidden="true"><img src="../../../assets/img/logo-icon.svg" alt="" width="48" height="48" /></span>
+<span class="brand-text"><span class="brand-name">Solvanta Consulting</span></span>
+</a>
+<button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" data-nav-toggle><span aria-hidden="true"></span></button>
+<nav class="site-nav" aria-label="Main navigation" data-nav-menu>
+<a href="/">Home</a><a href="/courses/">Courses</a><a href="/about/">About</a><a href="/contact/">Contact</a>
+</nav>
+</div>
+</header>
+<div class="course-lesson-bar">
+<div class="lesson-bar-inner">
+<a class="lesson-back" href="../">Course overview</a>
+<div class="lesson-meta"><span>AI Basics for Everyday Users</span><strong>AI in the Real World</strong></div>
+<nav class="nav lesson-section-nav" id="nav" aria-label="Page sections">
+    <a href="#family">The Family</a>
+    <a href="#connect">Data &amp; Tools</a>
+    <a href="#agents">Acting</a>
+    <a href="#deploy">Deploying</a>
+  </nav>
+<div class="lesson-step-links">
+<a href="part-1-how-ai-works.html">Previous lesson</a>
+<a href="part-3-buzzword-decoder.html">Next lesson</a>
+</div>
+</div>
+</div>
+<main id="main-content" class="course-content course-content--lesson" data-original-title="How AI Works in the Real World — Part 2">
+<div class="wrap">
+<!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-card">
+      <span class="eyebrow">Part 2 · Beyond the single model</span>
+      <h1>How AI works <span class="hl">in the real world.</span></h1>
+      <p class="hero-lede">Part 1 showed how one model thinks. This part zooms out: where AI sits in the wider family of technologies, how it safely connects to your company's data, how it can act on its own, and where it actually runs. Still plain language, still hands-on.</p>
+      <button class="cta" data-jump="#family">See where AI fits <span class="arr">↓</span></button>
+      <div class="chips">
+        <span class="chip">Nesting</span>
+        <span class="chip g">RAG</span>
+        <span class="chip o">MCP</span>
+        <span class="chip a">Agents</span>
+        <span class="chip">Edge &amp; Cloud</span>
+      </div>
+    </div>
+    <aside class="hero-side">
+      <div class="mini-fact"><div class="mf-num">5</div><div class="mf-lab">layers nest inside each other — an LLM lives deep inside the AI family, not beside it.</div></div>
+      <div class="mini-fact g"><div class="mf-num">RAG</div><div class="mf-lab">lets a model read your real documents first, so its answers are grounded, not guessed.</div></div>
+      <div class="mini-fact o"><div class="mf-num">HITL</div><div class="mf-lab">keeps a human in the loop — high-risk actions stop for a person to approve.</div></div>
+    </aside>
+  </section>
+
+  <!-- SECTION 1: NESTING -->
+  <section class="block" id="family">
+    <div class="block-head" data-accent="blue">
+      <span class="kicker">Section 1 · The map</span>
+      <h2 class="title"><span class="step-no" data-accent="blue">1</span>The AI family, nested</h2>
+      <p class="sub">“AI” gets used for very different things. These aren't rival technologies — each one lives inside the one before it. Click any layer to see what it is and what it adds.</p>
+    </div>
+    <div class="body-pad">
+      <div class="scope-grid">
+        <div class="nest">
+          <div class="layer active" role="button" tabindex="0" data-accent="blue" data-layer="ai">
+            <span class="layer-label"><span class="dotc"></span>Artificial Intelligence<span class="lt">AI</span></span>
+            <div class="layer-inner">
+              <div class="layer" role="button" tabindex="0" data-accent="green" data-layer="ml">
+                <span class="layer-label"><span class="dotc"></span>Machine Learning<span class="lt">ML</span></span>
+                <div class="layer-inner">
+                  <div class="layer" role="button" tabindex="0" data-accent="amber" data-layer="dl">
+                    <span class="layer-label"><span class="dotc"></span>Deep Learning<span class="lt">DL</span></span>
+                    <div class="layer-inner">
+                      <div class="layer" role="button" tabindex="0" data-accent="orange" data-layer="genai">
+                        <span class="layer-label"><span class="dotc"></span>Generative AI<span class="lt">GenAI</span></span>
+                        <div class="layer-inner">
+                          <div class="layer leaf" role="button" tabindex="0" data-accent="blue" data-layer="llm">
+                            <span class="layer-label" style="justify-content:center"><span class="dotc"></span>Large Language Model<span class="lt">LLM</span></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scope-panel" data-accent="blue" id="scopePanel" aria-live="polite">
+          <span class="sp-kick" id="scopeKick">AI</span>
+          <h3 id="scopeTitle">Artificial Intelligence</h3>
+          <p class="sp-def" id="scopeDef">The whole field of getting computers to do tasks that normally need human thinking — deciding, recognising, predicting, generating.</p>
+          <div class="sp-row">
+            <div class="sp-box adds"><div class="l">What it adds</div><p id="scopeAdds">The umbrella term that covers everything else here.</p></div>
+            <div class="sp-box ex"><div class="l">At work</div><p id="scopeEx">Spam filters, route planners, recommendation feeds and chat assistants.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="note">An LLM isn't competing with “AI” or “ML”. It's a highly specialised engine sitting deep inside the family — a small box inside a much bigger nesting doll.</div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: DATA & TOOLS -->
+  <section class="block" id="connect">
+    <div class="block-head" data-accent="green">
+      <span class="kicker">Section 2 · Connecting to your data</span>
+      <h2 class="title"><span class="step-no" data-accent="green">2</span>How AI reaches real company information</h2>
+      <p class="sub">On its own, a model only knows general patterns from training — not your files, prices or policies. These are the ways it gets connected to real data, safely.</p>
+    </div>
+    <div class="body-pad">
+      <div class="cards-4">
+        <div class="card" data-accent="blue"><div class="c-ico">⇿</div><div class="c-tag">API</div><h3>The hard-wired pipe</h3><p>A fixed connection between two specific software systems. Reliable, but built one link at a time.</p></div>
+        <div class="card" data-accent="green"><div class="c-ico">▤</div><div class="c-tag">RAG</div><h3>Read first, then answer</h3><p>The model searches your private documents first and answers using what it actually found.</p></div>
+        <div class="card" data-accent="amber"><div class="c-ico">◎</div><div class="c-tag">Vector DB</div><h3>Search by meaning</h3><p>A store that finds the right text by meaning, not exact keywords — the engine behind RAG.</p></div>
+        <div class="card" data-accent="orange"><div class="c-ico">⇄</div><div class="c-tag">MCP</div><h3>One universal plug</h3><p>A single standard that lets a model securely connect to many tools and data sources at once.</p></div>
+      </div>
+
+      <p class="sub" style="margin-top:26px;max-width:none">Pick a route and watch where your question — and your data — actually travels.</p>
+      <div class="router-grid">
+        <div>
+          <div class="router-modes" id="routerModes">
+            <button class="btn-light solid" data-mode="plain">Plain prompt</button>
+            <button class="btn-light" data-mode="rag">RAG · your documents</button>
+            <button class="btn-light" data-mode="mcp">MCP · connected tools</button>
+          </div>
+          <div class="router-stage" id="routerStage" data-accent="blue" aria-label="Data routing diagram">
+            <svg class="router-lines" id="routerLines" preserveAspectRatio="none" aria-hidden="true"></svg>
+            <div class="rnode" data-node="user" style="left:13%;top:50%"><div class="rn-ic">⌖</div><div class="rn-t">You</div><div class="rn-s">your question</div></div>
+            <div class="rnode" data-node="llm" style="left:82%;top:27%"><div class="rn-ic">✦</div><div class="rn-t">Cloud AI model</div><div class="rn-s">general training</div></div>
+            <div class="rnode" data-node="store" style="left:46%;top:81%"><div class="rn-ic">▤</div><div class="rn-t">Your documents</div><div class="rn-s">vector database</div></div>
+            <div class="rnode" data-node="mcp" style="left:82%;top:81%"><div class="rn-ic">⇄</div><div class="rn-t">Connected tools</div><div class="rn-s">via MCP</div></div>
+          </div>
+        </div>
+        <div class="router-panel" data-accent="blue" id="routerPanel" aria-live="polite">
+          <h3 id="routerTitle">Plain prompt</h3>
+          <p class="rp-desc" id="routerDesc">Your question goes straight to the cloud model. It answers from general training only — it can't see any of your company's information.</p>
+          <div class="expo">
+            <div class="expo-item">Sees your private data <span class="pill bad" id="expoData">No access</span></div>
+            <div class="expo-item">Answers grounded in real sources <span class="pill bad" id="expoGround">Not grounded</span></div>
+            <div class="expo-item">Risk of made-up details <span class="pill bad" id="expoRisk">Higher</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="note">RAG doesn't make a model perfect, but grounding answers in your real documents makes it <b>far less likely to invent things</b>. MCP is what lets one model reach many systems through a single secure standard instead of a separate pipe for each.</div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: ACTING -->
+  <section class="block" id="agents">
+    <div class="block-head" data-accent="orange">
+      <span class="kicker">Section 3 · Tools that act</span>
+      <h2 class="title"><span class="step-no" data-accent="orange">3</span>From following steps to working on its own</h2>
+      <p class="sub">Some tools just run a fixed script. Others can plan, hit a snag, fix it themselves, and keep going — but stop for a human before anything risky. Run the same job both ways and watch the difference.</p>
+    </div>
+    <div class="body-pad">
+      <div class="cards-3">
+        <div class="card" data-accent="blue"><div class="c-ico">→</div><div class="c-tag">AI Agent</div><h3>Narrow &amp; linear</h3><p>A script that uses a model to finish one fixed task. Fast — but it breaks the moment the task changes.</p></div>
+        <div class="card" data-accent="orange"><div class="c-ico">↻</div><div class="c-tag">Agentic AI</div><h3>Plans &amp; self-corrects</h3><p>Models that split work into steps, check their own results, and adapt in a loop until the job is done.</p></div>
+        <div class="card" data-accent="red" style="--ac:var(--red);--ac-soft:var(--red-soft);--ac-bd:var(--red-bd)"><div class="c-ico">⛔</div><div class="c-tag">Human-in-the-loop</div><h3>The approval gate</h3><p>A hard stop that pauses the system for a person to approve before any high-risk action goes ahead.</p></div>
+      </div>
+
+      <div class="wf-scenario" style="margin-top:24px">
+        <span class="ws-ic">▤</span>
+        <div><b>The job: process an incoming vendor invoice</b><span>Read the details, then schedule payment.</span></div>
+      </div>
+      <div class="wf-controls">
+        <button class="btn-light" id="wfRunAgent">Run as a simple agent</button>
+        <button class="btn-light solid" id="wfRunAgentic">Run as an agentic system</button>
+        <button class="btn-light" id="wfReset">Reset</button>
+      </div>
+      <div class="wf-timeline" id="wfTimeline"></div>
+      <div class="wf-gate" id="wfGate">
+        <b>⛔ Human approval required</b>
+        <p>The system is ready to send a wire transfer. By design, it stops here for a person to confirm before any money moves.</p>
+        <button class="wf-approve" id="wfApprove">Approve wire transfer</button>
+      </div>
+      <div class="wf-result" id="wfResult"></div>
+      <div class="note">More independence means more has to go right on its own — so the riskiest steps are built to <b>pause for a human</b>, not to push ahead.</div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: DEPLOYING -->
+  <section class="block" id="deploy">
+    <div class="block-head" data-accent="amber">
+      <span class="kicker">Section 4 · Where it runs</span>
+      <h2 class="title"><span class="step-no" data-accent="amber">4</span>Modalities, security and the trade-offs</h2>
+      <p class="sub">The same kind of model can be deployed in very different places — and each choice trades cost, speed, control and risk. First the key terms, then a live look at the trade-offs.</p>
+    </div>
+    <div class="body-pad">
+      <div class="cards-3">
+        <div class="card" data-accent="blue"><div class="c-ico">◉</div><div class="c-tag">Multimodal AI</div><h3>Text, image &amp; audio together</h3><p>Handles several input types — words, pictures, sound — in a single pass instead of one at a time.</p></div>
+        <div class="card" data-accent="green"><div class="c-ico">◌</div><div class="c-tag">Diffusion models</div><h3>The image &amp; video engine</h3><p>Builds pictures by starting from random noise and refining it step by step into a clear image.</p></div>
+        <div class="card" data-accent="red" style="--ac:var(--red);--ac-soft:var(--red-soft);--ac-bd:var(--red-bd)"><div class="c-ico">!</div><div class="c-tag">Shadow AI</div><h3>The hidden risk</h3><p>Staff quietly using public consumer tools for company data — convenient, but a serious leak risk.</p></div>
+        <div class="card" data-accent="blue"><div class="c-ico">⛨</div><div class="c-tag">Sovereign AI</div><h3>Kept fully in-house</h3><p>Running and training models entirely inside your own servers or your country's borders for full control.</p></div>
+        <div class="card" data-accent="amber"><div class="c-ico">▢</div><div class="c-tag">Edge AI</div><h3>Runs on the device</h3><p>A compact model running directly on a laptop, phone or camera — fast, private, even fully offline.</p></div>
+      </div>
+
+      <p class="sub" style="margin-top:26px;max-width:none">Choose where a model runs and watch the trade-offs move. There's no “best” — only the right fit for the data.</p>
+      <div class="matrix-grid">
+        <div class="deploy-list" id="deployList">
+          <button class="dbtn active" data-opt="public"><span class="db-t">Public cloud chatbot</span><span class="db-s">Convenient, general-purpose</span></button>
+          <button class="dbtn" data-opt="rag"><span class="db-t">Private enterprise (RAG)</span><span class="db-s">Your data, your pipeline</span></button>
+          <button class="dbtn" data-opt="edge"><span class="db-t">On-device (Edge)</span><span class="db-s">Runs locally, offline</span></button>
+          <button class="dbtn" data-opt="sovereign"><span class="db-t">Sovereign cloud</span><span class="db-s">Fully contained &amp; controlled</span></button>
+        </div>
+        <div class="gauges" id="gauges">
+          <div class="gauge bad" id="gw-cost"><div class="g-top"><span class="g-name">Setup &amp; resource cost <span class="g-hint">higher = heavier</span></span><span class="g-lvl" id="lvl-cost">Low</span></div><div class="g-track"><i id="bar-cost"></i></div></div>
+          <div class="gauge good" id="gw-speed"><div class="g-top"><span class="g-name">Response speed <span class="g-hint">higher = faster</span></span><span class="g-lvl" id="lvl-speed">High</span></div><div class="g-track"><i id="bar-speed"></i></div></div>
+          <div class="gauge bad" id="gw-leak"><div class="g-top"><span class="g-name">Data-leak risk <span class="g-hint">higher = riskier</span></span><span class="g-lvl" id="lvl-leak">High</span></div><div class="g-track"><i id="bar-leak"></i></div></div>
+          <div class="gauge good" id="gw-ind"><div class="g-top"><span class="g-name">Independence <span class="g-hint">higher = works alone</span></span><span class="g-lvl" id="lvl-ind">Low</span></div><div class="g-track"><i id="bar-ind"></i></div></div>
+          <div class="trade" id="matrixTrade"></div>
+        </div>
+      </div>
+      <div class="note warn">The riskiest pattern is <b>Shadow AI</b>: pasting company data into a public chatbot on your own. It carries the highest leak risk with none of the controls the other options give you.</div>
+    </div>
+  </section>
+
+  <!-- CLOSE -->
+  <div class="verify" aria-label="The principle for using AI safely at work">
+    <p class="v-head">The rule that keeps AI safe at work: <b>match the tool to the data</b></p>
+    <p class="v-lede">The more sensitive or high-stakes the task, the more grounding, control and human oversight it needs.</p>
+    <div class="verify-row">
+      <div class="v-item"><span class="v-ico">⌖</span><div><b>Know where your data goes</b><span>Before you paste anything in, check whether it leaves your control.</span></div></div>
+      <div class="v-item"><span class="v-ico">▤</span><div><b>Ground company answers</b><span>For real facts and figures, use tools connected to your own sources.</span></div></div>
+      <div class="v-item"><span class="v-ico">⛔</span><div><b>Keep a human on risk</b><span>Anything costly or irreversible should pause for a person to approve.</span></div></div>
+    </div>
+  </div>
+<nav class="course-module-bottom" aria-label="Lesson navigation">
+<a href="part-1-how-ai-works.html">Previous lesson</a>
+<a href="part-3-buzzword-decoder.html">Next lesson</a>
+<a href="../">Course overview</a>
+</nav>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container footer-layout">
+<div class="footer-brand">
+<p class="footer-title">Solvanta Consulting</p>
+<p class="muted">Free practical learning resources, with certificates only where they fit the course.</p>
+</div>
+<div>
+<h3>Site</h3>
+<nav class="footer-links" aria-label="Footer site links">
+<a data-footer-link href="/courses/">Courses</a>
+<a data-footer-link href="/about/">About</a>
+<a data-footer-link href="/contact/">Contact</a>
+<a data-footer-link href="/verify/">Certificate lookup</a>
+</nav>
+</div>
+<div>
+<h3>Policies</h3>
+<nav class="footer-links" aria-label="Footer policy links">
+<a data-footer-link href="/privacy-policy/">Privacy Policy</a>
+<a data-footer-link href="/terms/">Terms of Use</a>
+<a data-footer-link href="/certificate-policy/">Certificate Policy</a>
+<a data-footer-link href="/data-deletion/">Data Deletion</a>
+</nav>
+</div>
+</div>
+<div class="container footer-bottom">&copy; <span data-current-year></span> Solvanta Consulting. All rights reserved.</div>
+</footer>
+<script src="../../../assets/js/config.js?v=2"></script>
+<script src="../../../assets/js/main.js"></script>
+<script>
+/* ===================== Progress + jump + nav ===================== */
+const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{const h=document.documentElement;progress.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100)+'%';},{passive:true});
+document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>{const el=document.querySelector(b.dataset.jump);if(el)el.scrollIntoView({behavior:'smooth'});}));
+const navLinks=[...document.querySelectorAll('#nav a')],navMap={};
+navLinks.forEach(a=>navMap[a.getAttribute('href').slice(1)]=a);
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){navLinks.forEach(a=>a.classList.remove('active'));const a=navMap[e.target.id];if(a)a.classList.add('active');}});},{rootMargin:'-45% 0px -50% 0px'});
+  ['family','connect','agents','deploy'].forEach(id=>{const s=document.getElementById(id);if(s)io.observe(s);});
+}
+const REDUCE=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ===================== Section 1 · Nesting ===================== */
+const SCOPE={
+  ai:{kick:'AI',title:'Artificial Intelligence',def:'The whole field of getting computers to do tasks that normally need human thinking — deciding, recognising, predicting, generating.',adds:'The umbrella term that covers everything else here.',ex:'Spam filters, route planners, recommendation feeds and chat assistants.'},
+  ml:{kick:'ML',title:'Machine Learning',def:'Systems that learn patterns from data instead of being hand-coded rule by rule. Show them enough examples and they work out the rule themselves.',adds:'Learning from examples, rather than fixed instructions.',ex:'Predicting which invoices are likely to be paid late.'},
+  dl:{kick:'DL',title:'Deep Learning',def:'Machine learning built from many-layered neural networks. The extra layers let it handle messy, unstructured things like images and audio.',adds:'The ability to handle complex, unstructured data.',ex:'Reading text from a scanned document or a photo.'},
+  genai:{kick:'GenAI',title:'Generative AI',def:'Deep-learning models tuned to create brand-new content rather than only sorting or scoring existing data.',adds:'Creating something new, not just classifying.',ex:'Drafting an email, an image, or a summary.'},
+  llm:{kick:'LLM',title:'Large Language Model',def:'A generative model focused on text. It works out the most likely next token — exactly the engine you explored in Part 1.',adds:'A specialism in language and text.',ex:'The model behind a chat assistant.'}
+};
+const scopeKick=document.getElementById('scopeKick'),scopeTitle=document.getElementById('scopeTitle'),scopeDef=document.getElementById('scopeDef'),scopeAdds=document.getElementById('scopeAdds'),scopeEx=document.getElementById('scopeEx'),scopePanel=document.getElementById('scopePanel');
+const ACC={ai:'blue',ml:'green',dl:'amber',genai:'orange',llm:'blue'};
+function activateLayer(l){
+  document.querySelectorAll('.layer').forEach(x=>x.classList.remove('active'));
+  l.classList.add('active');
+  const k=l.dataset.layer,d=SCOPE[k];
+  scopePanel.setAttribute('data-accent',ACC[k]);
+  scopeKick.textContent=d.kick;scopeTitle.textContent=d.title;scopeDef.textContent=d.def;scopeAdds.textContent=d.adds;scopeEx.textContent=d.ex;
+}
+document.querySelectorAll('.layer').forEach(l=>{
+  l.addEventListener('click',e=>{e.stopPropagation();activateLayer(l);});
+  l.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();activateLayer(l);}});
+});
+
+/* ===================== Section 2 · Data router ===================== */
+const routerStage=document.getElementById('routerStage'),routerLines=document.getElementById('routerLines');
+const routerTitle=document.getElementById('routerTitle'),routerDesc=document.getElementById('routerDesc');
+const expoData=document.getElementById('expoData'),expoGround=document.getElementById('expoGround'),expoRisk=document.getElementById('expoRisk');
+const ROUTES={
+  plain:{acc:'blue',path:['user','llm'],lit:['user','llm'],title:'Plain prompt',
+    desc:'Your question goes straight to the cloud model. It answers from general training only — it can\'t see any of your company\'s information.',
+    data:['No access','bad'],ground:['Not grounded','bad'],risk:['Higher','bad']},
+  rag:{acc:'green',path:['user','store','llm'],lit:['user','store','llm'],title:'RAG · your documents',
+    desc:'Your question first searches your private documents (by meaning, using a vector database). The matching text is attached to the question, so the model answers from your real sources.',
+    data:['Reads your docs','ok'],ground:['Grounded','ok'],risk:['Lower','ok']},
+  mcp:{acc:'orange',path:['user','llm','mcp'],lit:['user','llm','mcp'],title:'MCP · connected tools',
+    desc:'The model connects to your live tools and data through one secure standard, so it can pull current information or take an action — without a separate custom pipe for each system.',
+    data:['Live, via tools','mid'],ground:['Uses live data','ok'],risk:['Controlled','mid']}}
+;
+let routeRAF=null,routeDist=0;
+function nodeCenter(node){
+  const el=routerStage.querySelector('.rnode[data-node="'+node+'"]');
+  const r=el.getBoundingClientRect(),s=routerStage.getBoundingClientRect();
+  return {x:r.left-s.left+r.width/2,y:r.top-s.top+r.height/2};
+}
+function setRoute(mode){
+  const R=ROUTES[mode];
+  routerStage.setAttribute('data-accent',R.acc);
+  document.getElementById('routerPanel').setAttribute('data-accent',R.acc);
+  // toggle buttons
+  document.querySelectorAll('#routerModes .btn-light').forEach(b=>b.classList.toggle('solid',b.dataset.mode===mode));
+  // dim/lit nodes
+  routerStage.querySelectorAll('.rnode').forEach(n=>{const on=R.lit.includes(n.dataset.node);n.classList.toggle('lit',on);n.classList.toggle('dim',!on);});
+  // build path
+  const W=routerStage.clientWidth,H=routerStage.clientHeight;
+  routerLines.setAttribute('viewBox','0 0 '+W+' '+H);
+  const pts=R.path.map(nodeCenter);
+  let d='M '+pts[0].x+' '+pts[0].y;for(let i=1;i<pts.length;i++)d+=' L '+pts[i].x+' '+pts[i].y;
+  routerLines.innerHTML='<path class="route-line" id="routePath" d="'+d+'"></path><circle class="route-dot" id="routeDot" r="6" cx="'+pts[0].x+'" cy="'+pts[0].y+'"></circle>';
+  // panel text
+  routerTitle.textContent=R.title;routerDesc.textContent=R.desc;
+  expoData.textContent=R.data[0];expoData.className='pill '+R.data[1];
+  expoGround.textContent=R.ground[0];expoGround.className='pill '+R.ground[1];
+  expoRisk.textContent=R.risk[0];expoRisk.className='pill '+R.risk[1];
+  // animate
+  if(routeRAF){cancelAnimationFrame(routeRAF);routeRAF=null;}
+  const path=document.getElementById('routePath'),dot=document.getElementById('routeDot');
+  if(REDUCE||!path.getTotalLength){return;}
+  const len=path.getTotalLength();routeDist=0;
+  const speed=Math.max(2.4,len/150);
+  (function frame(){routeDist+=speed;if(routeDist>len)routeDist=0;const p=path.getPointAtLength(routeDist);dot.setAttribute('cx',p.x);dot.setAttribute('cy',p.y);routeRAF=requestAnimationFrame(frame);})();
+}
+document.querySelectorAll('#routerModes .btn-light').forEach(b=>b.addEventListener('click',()=>setRoute(b.dataset.mode)));
+window.addEventListener('resize',()=>{const cur=document.querySelector('#routerModes .btn-light.solid');if(cur)setRoute(cur.dataset.mode);});
+window.addEventListener('load',()=>setRoute('plain'));
+setRoute('plain');
+
+/* ===================== Section 3 · Workflow ===================== */
+const AGENT_STEPS=[
+  {t:'Receive the invoice file',badge:'in',s:'running',end:'done'},
+  {t:'Read the expected fields (date, amount, vendor)',badge:'read',s:'running',end:'done'},
+  {t:'Invoice layout is different from the template',badge:'mismatch',s:'running',end:'warn'},
+  {t:'Step fails — the script can\'t read an unexpected format, and stops',badge:'failed',s:'running',end:'fail'}
+];
+const AGENTIC_STEPS=[
+  {t:'Receive the invoice file',badge:'in',s:'running',end:'done'},
+  {t:'Read the fields (date, amount, vendor)',badge:'read',s:'running',end:'done'},
+  {t:'Layout is unexpected — flag the problem',badge:'notice',s:'running',end:'warn'},
+  {t:'Try a different approach and re-read the fields',badge:'adapt',s:'running',end:'done'},
+  {t:'Check the extracted amount against the purchase order',badge:'verify',s:'running',end:'done'},
+  {t:'Details confirmed — prepare the payment',badge:'ready',s:'running',end:'done'},
+  {t:'Hold for human approval before sending money',badge:'gate',s:'running',end:'warn',gate:true},
+  {t:'Approved — schedule the payment',badge:'pay',s:'running',end:'done'},
+  {t:'Done — invoice processed end to end',badge:'complete',s:'running',end:'done'}
+];
+const wfTimeline=document.getElementById('wfTimeline'),wfGate=document.getElementById('wfGate'),wfResult=document.getElementById('wfResult');
+const wfRunAgent=document.getElementById('wfRunAgent'),wfRunAgentic=document.getElementById('wfRunAgentic'),wfReset=document.getElementById('wfReset'),wfApprove=document.getElementById('wfApprove');
+let wfTimers=[],wfSteps=[],wfMode='';
+function wfClear(){
+  wfTimers.forEach(clearTimeout);wfTimers=[];
+  wfTimeline.innerHTML='';wfGate.classList.remove('show');wfResult.className='wf-result';wfResult.textContent='';
+}
+function wfRender(){
+  wfTimeline.innerHTML=wfSteps.map((s,i)=>'<div class="wf-step" id="wfs'+i+'"><span class="wf-t">'+s.t+'</span><span class="wf-badge">'+s.badge+'</span></div>').join('');
+}
+function wfReveal(i){
+  if(i>=wfSteps.length){return;}
+  const step=wfSteps[i],el=document.getElementById('wfs'+i);
+  el.classList.add('show','running');
+  const settle=()=>{
+    el.classList.remove('running');el.classList.add(step.end);
+    if(step.gate){
+      wfGate.classList.add('show');
+      // wait for approval click to continue
+      return;
+    }
+    if(step.end==='fail'){
+      wfResult.className='wf-result stop show';
+      wfResult.innerHTML='A simple agent follows fixed steps. The moment reality differs from the script, it has no way to adapt — so the job stops here.';
+      return;
+    }
+    if(i===wfSteps.length-1){
+      wfResult.className='wf-result ok show';
+      wfResult.innerHTML='An agentic system noticed the problem, corrected itself, and finished the job — but still paused for a human before any money moved.';
+      return;
+    }
+    wfTimers.push(setTimeout(()=>wfReveal(i+1),REDUCE?0:520));
+  };
+  if(REDUCE){settle();}
+  else{wfTimers.push(setTimeout(settle,420));}
+}
+function wfRun(mode){
+  wfClear();wfMode=mode;
+  wfSteps=(mode==='agent'?AGENT_STEPS:AGENTIC_STEPS).map(s=>Object.assign({},s));
+  wfRender();
+  if(REDUCE){
+    // reveal up to gate (or end) instantly, respecting the gate pause
+    let i=0;const stepThrough=()=>{ if(i>=wfSteps.length)return; const el=document.getElementById('wfs'+i); el.classList.add('show',wfSteps[i].end); if(wfSteps[i].gate){wfGate.classList.add('show');return;} if(wfSteps[i].end==='fail'){wfResult.className='wf-result stop show';wfResult.innerHTML='A simple agent follows fixed steps. The moment reality differs from the script, it has no way to adapt — so the job stops here.';return;} if(i===wfSteps.length-1){wfResult.className='wf-result ok show';wfResult.innerHTML='An agentic system noticed the problem, corrected itself, and finished the job — but still paused for a human before any money moved.';return;} i++;stepThrough(); };
+    stepThrough();return;
+  }
+  wfReveal(0);
+}
+wfApprove.addEventListener('click',()=>{
+  wfGate.classList.remove('show');
+  const gateIdx=wfSteps.findIndex(s=>s.gate);
+  if(gateIdx>=0)wfReveal(gateIdx+1);
+});
+wfRunAgent.addEventListener('click',()=>{wfRunAgent.classList.add('solid');wfRunAgentic.classList.remove('solid');wfRun('agent');});
+wfRunAgentic.addEventListener('click',()=>{wfRunAgentic.classList.add('solid');wfRunAgent.classList.remove('solid');wfRun('agentic');});
+wfReset.addEventListener('click',()=>{wfClear();wfRunAgent.classList.remove('solid');wfRunAgentic.classList.add('solid');});
+
+/* ===================== Section 4 · Deployment matrix ===================== */
+const DEPLOY={
+  public:{cost:28,speed:88,leak:88,ind:16,trade:'Fast and effortless to use, but your data leaves your control and you depend entirely on an outside provider.'},
+  rag:{cost:62,speed:66,leak:34,ind:58,trade:'Answers stay grounded in your own data inside a controlled pipeline — more to set up, but far safer for company information.'},
+  edge:{cost:72,speed:92,leak:10,ind:95,trade:'Runs on the device with no round trip — very fast and private, even offline — but it needs capable local hardware.'},
+  sovereign:{cost:92,speed:60,leak:14,ind:82,trade:'Everything stays inside your own walls or borders for maximum control — the most demanding and costly to run.'}
+};
+const bars={cost:document.getElementById('bar-cost'),speed:document.getElementById('bar-speed'),leak:document.getElementById('bar-leak'),ind:document.getElementById('bar-ind')};
+const lvls={cost:document.getElementById('lvl-cost'),speed:document.getElementById('lvl-speed'),leak:document.getElementById('lvl-leak'),ind:document.getElementById('lvl-ind')};
+const matrixTrade=document.getElementById('matrixTrade');
+function level(v){return v<25?'Low':v<50?'Medium':v<75?'High':'Very high';}
+function setDeploy(opt){
+  const d=DEPLOY[opt];
+  document.querySelectorAll('#deployList .dbtn').forEach(b=>b.classList.toggle('active',b.dataset.opt===opt));
+  ['cost','speed','leak','ind'].forEach(k=>{bars[k].style.width=d[k]+'%';lvls[k].textContent=level(d[k]);});
+  matrixTrade.textContent=d.trade;
+}
+document.querySelectorAll('#deployList .dbtn').forEach(b=>b.addEventListener('click',()=>setDeploy(b.dataset.opt)));
+setDeploy('public');
+</script>
 </body>
 </html>

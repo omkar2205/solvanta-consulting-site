@@ -1,16 +1,611 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-<meta charset='UTF-8' />
-<meta name='viewport' content='width=device-width, initial-scale=1.0' />
-<title>Assessment | AI Basics for Everyday Users</title>
-<link rel='stylesheet' href='../../../assets/css/styles.css' />
-<style>.module-shell{min-height:calc(100vh - var(--header-height));background:var(--color-soft)}.module-shellbar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center;padding:14px 24px;border-bottom:1px solid var(--color-border);background:#fff}.module-shellbar h1{margin:0;font-family:var(--font-body);font-size:1rem;line-height:1.25;letter-spacing:0;font-weight:800}.module-shellbar p{margin:0;color:var(--color-muted);font-size:.88rem}.module-link{color:var(--color-primary);font-weight:800;text-decoration:none}.module-frame-wrap{height:calc(100vh - var(--header-height) - 74px);min-height:660px;background:#fff}.module-frame-wrap iframe{display:block;width:100%;height:100%;border:0;background:#fff}.module-status{margin:0;padding:30px;color:var(--color-muted)}@media(max-width:720px){.module-shellbar{grid-template-columns:1fr;gap:8px;padding:14px 16px}.module-frame-wrap{height:calc(100vh - 180px);min-height:620px}}</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Assessment | AI Basics for Everyday Users | Solvanta Consulting</title>
+<meta name="description" content="A short practical assessment covering the course ideas." />
+<link rel="stylesheet" href="../../../assets/css/styles.css" />
+<style>
+:root{
+  --paper:#FFFFFF;--ink:#1F1B2D;--ink-soft:#3F3A4D;--muted:#6F6A7A;
+  --line:#E8DED4;--line-2:#DED1C4;--bg-1:#FAF7F2;--bg-2:#F3EADF;
+  --blue:#9A4F2F;--blue-soft:#F3EADF;--blue-bd:#E8DED4;
+  --green:#15A24A;--green-soft:#E7F6EC;--green-bd:#C7E8D3;
+  --orange:#E4691C;--orange-soft:#FCEEE3;--orange-bd:#F4D3BC;
+  --amber:#CC8A0A;--amber-soft:#FCF1D9;--amber-bd:#F0DCA8;
+  --red:#D33A2C;--red-soft:#FCE9E7;--red-bd:#F3C9C3;
+  --gold:#9A4F2F;--marker:#FCE38A;
+  --mono:Consolas,"SF Mono","Courier New",monospace;
+  --shadow-sm:0 4px 14px rgba(31,27,45,.06);--shadow-md:0 16px 40px rgba(31,27,45,.08);--shadow-lg:0 30px 64px rgba(154,79,47,.13);
+  --r:18px;--r-sm:13px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Aptos,Calibri,Arial,sans-serif;font-size:17px;line-height:1.55;color:var(--ink);
+  background:radial-gradient(1100px 460px at 4% -10%,rgba(154,79,47,.07),transparent 60%),radial-gradient(900px 420px at 104% -2%,rgba(204,138,10,.07),transparent 55%),linear-gradient(180deg,var(--bg-1),var(--bg-2));background-attachment:fixed}
+button,input{font-family:inherit}button{cursor:pointer}
+:focus-visible{outline:3px solid rgba(154,79,47,.45);outline-offset:2px;border-radius:8px}
+
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--blue),var(--green));z-index:60;transition:width .25s ease}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:14px;padding:13px clamp(16px,4vw,44px);background:rgba(245,248,253,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(232,222,212,.7)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em}
+.logo-mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(140deg,#9A4F2F,#5F2E1F);color:#fff;font-size:15px;font-weight:900;box-shadow:0 8px 18px rgba(154,79,47,.3)}
+.part-tag{font-size:11px;font-weight:900;color:var(--blue);background:var(--blue-soft);border:1px solid var(--blue-bd);padding:3px 8px;border-radius:999px;letter-spacing:.04em}
+
+.wrap{width:min(960px,calc(100% - 40px));margin:0 auto;padding:30px 0 90px}
+.card{background:rgba(255,255,255,.85);border:1px solid rgba(232,222,212,.85);border-radius:var(--r);box-shadow:var(--shadow-md);overflow:hidden}
+.card-pad{padding:clamp(26px,4vw,46px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:900;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);background:var(--blue-soft);border:1px solid var(--blue-bd);padding:7px 12px;border-radius:999px;margin-bottom:18px}
+h1{font-size:clamp(32px,5vw,56px);line-height:1;margin:0 0 14px;letter-spacing:-.05em}
+.hl{background:linear-gradient(transparent 60%,var(--marker) 60%);padding:0 .06em;border-radius:3px}
+.lede{font-size:clamp(16px,1.7vw,20px);color:var(--ink-soft);margin:0 0 22px;max-width:640px}
+h2{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.035em;margin:0 0 8px}
+.muted{color:var(--muted)}
+
+.cta{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(140deg,#9A4F2F,#5F2E1F);color:#fff;border:none;border-radius:999px;padding:13px 24px;font-weight:800;font-size:16px;box-shadow:0 14px 30px rgba(154,79,47,.3);transition:transform .15s,box-shadow .15s}
+.cta:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 20px 40px rgba(154,79,47,.36)}
+.cta:disabled{opacity:.5;cursor:not-allowed}
+.btn-light{border:1px solid var(--line-2);background:#fff;color:var(--ink);border-radius:999px;padding:12px 20px;font-weight:800;font-size:15px;transition:border-color .15s,transform .15s,background .15s}
+.btn-light:hover:not(:disabled){border-color:var(--blue);transform:translateY(-1px)}
+.btn-light:disabled{opacity:.45;cursor:not-allowed}
+.btn-light.go{background:var(--green);border-color:var(--green);color:#fff}
+.btn-light.go:hover:not(:disabled){background:#11843c}
+
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.chip{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:8px 13px;font-weight:800;font-size:13px;border:1px solid var(--line-2);background:#fff}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.chip.g::before{background:var(--green)}.chip.o::before{background:var(--orange)}
+
+.name-input{width:100%;max-width:480px;border:1px solid var(--line-2);border-radius:12px;padding:14px 16px;font-size:17px;background:#FFFDFC;color:var(--ink);display:block}
+.name-input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(154,79,47,.12)}
+.field-label{font-weight:800;font-size:14px;margin:0 0 8px}
+.input-err{color:var(--red);font-size:13.5px;font-weight:700;margin-top:9px;display:none}
+.input-err.show{display:block}
+.row-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;align-items:center}
+
+.ins-list{display:grid;gap:12px;margin:6px 0 0}
+.ins-item{display:flex;gap:13px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fff}
+.ins-item .ii{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:900;flex:none;background:var(--blue-soft);color:var(--blue);font-size:16px}
+.ins-item:nth-child(2) .ii{background:var(--green-soft);color:var(--green)}
+.ins-item:nth-child(3) .ii{background:var(--amber-soft);color:var(--amber)}
+.ins-item:nth-child(4) .ii{background:var(--orange-soft);color:var(--orange)}
+.ins-item:nth-child(5) .ii{background:var(--red-soft);color:var(--red)}
+.ins-item b{display:block;font-size:15.5px;margin-bottom:2px}
+.ins-item span{color:var(--muted);font-size:14px}
+
+.screen{display:none}.screen.active{display:block}
+
+.q-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.q-who{font-size:13px;font-weight:700;color:var(--muted)}
+.q-count{font-family:var(--mono);font-weight:800;font-size:14px;color:var(--ink)}
+.q-bar{height:8px;border-radius:6px;background:#F3EADF;overflow:hidden;margin:8px 0 20px}
+.q-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .3s}
+.q-type{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--blue);background:var(--blue-soft);border:1px solid var(--blue-bd);padding:5px 10px;border-radius:999px;margin-bottom:12px}
+.q-type.match{color:var(--orange);background:var(--orange-soft);border-color:var(--orange-bd)}
+.q-stem{font-size:clamp(18px,2.1vw,23px);font-weight:800;letter-spacing:-.02em;margin:0 0 16px;line-height:1.3}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--line-2);background:#fff;border-radius:12px;padding:14px 16px;font-size:15.5px;font-weight:650;color:var(--ink-soft);margin-bottom:10px;transition:border-color .15s,background .15s,transform .12s}
+.opt:hover{border-color:var(--blue);transform:translateX(2px)}
+.opt.selected{border-color:var(--blue);background:var(--blue-soft);color:var(--ink);font-weight:750}
+.opt .mk{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;border:1px solid var(--line-2);margin-right:11px;font-weight:800;font-size:12px;color:var(--muted);vertical-align:-6px}
+.opt.selected .mk{background:var(--blue);border-color:var(--blue);color:#fff}
+.match-hint{font-size:13.5px;color:var(--muted);margin:0 0 14px}
+.match-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center;margin-bottom:10px}
+.match-row .ml{border:1px solid var(--line);border-radius:10px;padding:13px 15px;background:#FFFDFC;font-weight:750;font-size:15px}
+.match-row select{border:1px solid var(--line-2);border-radius:10px;padding:13px 12px;font-size:15px;background:#fff;color:var(--ink);width:100%}
+.match-row select.set{border-color:var(--blue);background:var(--blue-soft)}
+.q-nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+
+.result-card{text-align:center}
+.result-badge{display:inline-flex;align-items:center;gap:8px;font-weight:900;font-size:16px;padding:10px 18px;border-radius:999px;margin-bottom:16px}
+.result-badge.pass{background:var(--green-soft);color:var(--green)}
+.result-badge.fail{background:var(--red-soft);color:var(--red)}
+.result-score{font-family:var(--mono);font-size:clamp(50px,9vw,88px);font-weight:800;letter-spacing:-.04em;color:var(--ink);line-height:1}
+.result-sub{color:var(--muted);font-size:16px;margin:8px 0 0}
+.result-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+
+.cert-wrap{margin-top:26px;border:1px solid var(--line);border-radius:var(--r-sm);background:#fff;padding:16px;box-shadow:var(--shadow-sm)}
+.cert-wrap canvas{width:100%;height:auto;border-radius:6px;display:block}
+.cert-actions{display:flex;justify-content:center;margin-top:14px}
+.cert-note{font-size:12.5px;color:var(--muted);margin:12px 4px 0;text-align:center;line-height:1.5}
+
+.review{display:none;margin-top:24px;text-align:left}
+.review.show{display:block}
+.review h3{font-size:18px;letter-spacing:-.02em;margin:0 0 12px}
+.rev-item{border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:9px;background:#fff;border-left:4px solid var(--green)}
+.rev-item.wrong{border-left-color:var(--red)}
+.rev-item .rq{font-weight:750;font-size:14.5px;margin-bottom:5px}
+.rev-item .ra{font-size:13.5px;color:var(--ink-soft);margin:1px 0}
+.rev-item .ra .you{font-weight:800}
+.rev-item.wrong .you{color:var(--red)}
+.rev-item .corr{color:var(--green);font-weight:800}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .topbar{flex-wrap:wrap}
+  .match-row{grid-template-columns:1fr}
+  .q-nav{flex-direction:column-reverse}
+  .q-nav .btn-light,.q-nav .cta{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+<link rel="stylesheet" href="../assets/solvanta-course.css" />
 </head>
-<body>
-<a class='skip-link' href='#main-content'>Skip to assessment</a>
-<header class='site-header'><div class='header-inner'><a class='brand-link' href='/' aria-label='Solvanta Consulting home'><span class='brand-mark' aria-hidden='true'><img src='../../../assets/img/logo-icon.svg' alt='' width='48' height='48' /></span><span class='brand-text'><span class='brand-name'>Solvanta Consulting</span></span></a><button class='nav-toggle' type='button' aria-label='Open navigation menu' aria-expanded='false' data-nav-toggle><span aria-hidden='true'></span></button><nav class='site-nav' aria-label='Main navigation' data-nav-menu><a href='/'>Home</a><a href='/courses/'>Courses</a><a href='/about/'>About</a><a href='/contact/'>Contact</a></nav></div></header>
-<main id='main-content' class='module-shell'><div class='module-shellbar'><a class='module-link' href='part-4-practical-use.html'>Previous lesson</a><div><p>AI Basics for Everyday Users</p><h1>Assessment</h1></div><a class='module-link' href='../'>Back to course</a></div><div class='module-frame-wrap'><p class='module-status' data-module-status>Loading assessment...</p><iframe title='AI Basics assessment' data-module-frame hidden></iframe></div></main>
-<script src='../../../assets/js/config.js?v=2'></script><script src='../../../assets/js/main.js'></script><script src='module-loader.js' data-title='Assessment' data-payload='payloads/assessment.html.gz'></script>
+<body class="course-lesson-page">
+<div class="progress" id="progress"></div>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand-link" href="/" aria-label="Solvanta Consulting home">
+<span class="brand-mark" aria-hidden="true"><img src="../../../assets/img/logo-icon.svg" alt="" width="48" height="48" /></span>
+<span class="brand-text"><span class="brand-name">Solvanta Consulting</span></span>
+</a>
+<button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" data-nav-toggle><span aria-hidden="true"></span></button>
+<nav class="site-nav" aria-label="Main navigation" data-nav-menu>
+<a href="/">Home</a><a href="/courses/">Courses</a><a href="/about/">About</a><a href="/contact/">Contact</a>
+</nav>
+</div>
+</header>
+<div class="course-lesson-bar">
+<div class="lesson-bar-inner">
+<a class="lesson-back" href="../">Course overview</a>
+<div class="lesson-meta"><span>AI Basics for Everyday Users</span><strong>Assessment</strong></div>
+<nav class="nav lesson-section-nav" aria-label="Course modules"><a href="part-1-how-ai-works.html">Lesson one</a><a href="part-2-real-world.html">Lesson two</a><a href="part-3-buzzword-decoder.html">Lesson three</a><a href="part-4-practical-use.html">Lesson four</a><a href="assessment.html">Assessment</a></nav>
+<div class="lesson-step-links">
+<a href="part-4-practical-use.html">Previous lesson</a>
+</div>
+</div>
+</div>
+<main id="main-content" class="course-content course-content--lesson" data-original-title="AI Basics for Everyday Users — Assessment">
+<div class="wrap">
+<!-- WELCOME -->
+  <section class="screen active" id="screenWelcome">
+    <div class="card"><div class="card-pad">
+      <span class="eyebrow">Beginner assessment</span>
+      <h1>AI Basics for <span class="hl">Everyday Users</span></h1>
+      <p class="lede">A friendly, plain-language quiz about using tools like ChatGPT safely and well — no technical knowledge needed. It covers the everyday things every user should know. Pass, and you'll get a personalised certificate to download.</p>
+      <p class="field-label">Enter your full name to begin</p>
+      <input class="name-input" id="nameInput" type="text" placeholder="e.g. Alex Morgan" autocomplete="name" maxlength="60" />
+      <p class="input-err" id="nameErr">Please enter your name to continue.</p>
+      <div class="row-actions">
+        <button class="cta" id="toInstructions">Continue →</button>
+      </div>
+      <div class="chips">
+        <span class="chip">50 questions</span>
+        <span class="chip g">70% to pass</span>
+        <span class="chip o">No jargon</span>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- INSTRUCTIONS -->
+  <section class="screen" id="screenInstructions">
+    <div class="card"><div class="card-pad">
+      <span class="eyebrow">Before you start</span>
+      <h2>How this works</h2>
+      <p class="muted" id="greetLine" style="margin:0 0 18px">Good luck!</p>
+      <div class="ins-list">
+        <div class="ins-item"><span class="ii">50</span><div><b>50 everyday questions, freshly drawn each time</b><span>They're picked at random from a larger set, so every attempt is a little different — and the answer choices are shuffled too.</span></div></div>
+        <div class="ins-item"><span class="ii">◧</span><div><b>Simple, practical questions</b><span>Most are multiple-choice — just pick the best answer. A few ask you to match items. Nothing technical, just common-sense AI know-how.</span></div></div>
+        <div class="ins-item"><span class="ii">↺</span><div><b>You can go back</b><span>Move forward and back and change your answers before submitting. Unanswered questions count as incorrect.</span></div></div>
+        <div class="ins-item"><span class="ii">70</span><div><b>70% to pass</b><span>You need 35 of 50 correct. Pass, and a downloadable certificate with your name is created.</span></div></div>
+        <div class="ins-item"><span class="ii">⟳</span><div><b>Retake any time</b><span>Didn't pass, or refreshed the page? You'll get a fresh set of questions to try again.</span></div></div>
+      </div>
+      <div class="row-actions">
+        <button class="btn-light" id="backToWelcome">← Back</button>
+        <button class="cta" id="startQuiz">Start the quiz →</button>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="screen" id="screenQuiz">
+    <div class="card"><div class="card-pad">
+      <div class="q-top">
+        <span class="q-who" id="qWho"></span>
+        <span class="q-count" id="qCount">Question 1 of 50</span>
+      </div>
+      <div class="q-bar"><i id="qBar" style="width:2%"></i></div>
+      <div id="qBody"></div>
+      <div class="q-nav">
+        <button class="btn-light" id="qBack">← Back</button>
+        <button class="cta" id="qNext">Next →</button>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- RESULT -->
+  <section class="screen" id="screenResult">
+    <div class="card"><div class="card-pad result-card">
+      <span class="result-badge" id="resBadge">Passed</span>
+      <div class="result-score" id="resScore">0%</div>
+      <p class="result-sub" id="resSub">You scored 0 of 50.</p>
+
+      <div class="cert-wrap" id="certWrap" style="display:none">
+        <canvas id="certCanvas" width="1600" height="1131" role="img" aria-label="Course completion certificate"></canvas>
+        <div class="cert-actions"><button class="btn-light go" id="downloadCert">⬇ Download certificate (PNG)</button></div>
+        <p class="cert-note">This is a certificate of course completion for personal learning. It is not an official, accredited, or professionally recognised qualification.</p>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn-light" id="reviewToggle">Review answers</button>
+        <button class="cta" id="retake">Retake with new questions</button>
+        <button class="btn-light" id="startOver">Start over</button>
+      </div>
+
+      <div class="review" id="review"><h3>Your answers</h3><div id="reviewList"></div></div>
+    </div></div>
+  </section>
+<nav class="course-module-bottom" aria-label="Lesson navigation">
+<a href="part-4-practical-use.html">Previous lesson</a>
+<a href="../">Course overview</a>
+</nav>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container footer-layout">
+<div class="footer-brand">
+<p class="footer-title">Solvanta Consulting</p>
+<p class="muted">Free practical learning resources, with certificates only where they fit the course.</p>
+</div>
+<div>
+<h3>Site</h3>
+<nav class="footer-links" aria-label="Footer site links">
+<a data-footer-link href="/courses/">Courses</a>
+<a data-footer-link href="/about/">About</a>
+<a data-footer-link href="/contact/">Contact</a>
+<a data-footer-link href="/verify/">Certificate lookup</a>
+</nav>
+</div>
+<div>
+<h3>Policies</h3>
+<nav class="footer-links" aria-label="Footer policy links">
+<a data-footer-link href="/privacy-policy/">Privacy Policy</a>
+<a data-footer-link href="/terms/">Terms of Use</a>
+<a data-footer-link href="/certificate-policy/">Certificate Policy</a>
+<a data-footer-link href="/data-deletion/">Data Deletion</a>
+</nav>
+</div>
+</div>
+<div class="container footer-bottom">&copy; <span data-current-year></span> Solvanta Consulting. All rights reserved.</div>
+</footer>
+<script src="../../../assets/js/config.js?v=2"></script>
+<script src="../../../assets/js/main.js"></script>
+<script>
+/* ===================== Question bank (everyday basics) ===================== */
+const MCQ=[
+{q:"A tool like ChatGPT is best described as:",o:["A helpful assistant that generates text","A real human person","A search engine that is always right","A calculator only"],a:0},
+{q:"Can a tool like ChatGPT think or feel like a person?",o:["No, it has no feelings or consciousness","Yes, exactly like a human","Only when it is busy","Yes, it gets tired"],a:0},
+{q:"Tools like ChatGPT, Claude and Gemini are mainly used to:",o:["Help with writing, answering and ideas","Replace your phone","Print your documents","Charge your laptop"],a:0},
+{q:"Is ChatGPT always 100% correct?",o:["No — it can be confidently wrong","Yes, always","Only about maths","Only about history"],a:0},
+{q:"When AI makes something up that sounds true, it is often called a:",o:["Hallucination","Typo","Virus","Login"],a:0},
+{q:"AI produces its answers by:",o:["Predicting likely text from patterns it learned","Looking inside your computer","Calling a human in real time","Reading your mind"],a:0},
+{q:"Does ChatGPT always know what is happening in the world right now?",o:["No, it may not know very recent events","Yes, it is fully live","Only sports scores","Yes, like the daily news"],a:0},
+{q:"The safest mindset when using AI is to:",o:["Treat it as a helpful assistant, not a final authority","Believe everything it says","Never use it for anything","Assume it is a real person"],a:0},
+{q:"Before using an important fact from AI, you should:",o:["Double-check it","Share it immediately","Assume it is right","Print it"],a:0},
+{q:"If AI gives a statistic with no source, you should:",o:["Be cautious and verify it","Trust it because it sounds specific","Repeat it as a fact","Ignore the topic entirely"],a:0},
+{q:"For medical, legal or money decisions, you should:",o:["Check with a qualified professional","Only trust the AI","Avoid all advice","Just guess"],a:0},
+{q:"If an AI answer sounds very confident, that means:",o:["It might still be wrong","It is definitely correct","It came from the news","It has been verified"],a:0},
+{q:"Who is responsible for what you do with an AI's answer?",o:["You are","The AI is","Nobody is","The internet is"],a:0},
+{q:"A good habit before sending an AI-written email is to:",o:["Read and review it yourself","Send it instantly","Never read it","Delete it"],a:0},
+{q:"Should you paste passwords or bank details into a public AI chat?",o:["No, never","Yes, it is safe","Only short ones","Only on weekends"],a:0},
+{q:"Your conversations with some AI tools may be:",o:["Used to help improve the service","Always 100% private forever","Printed publicly","Deleted instantly every time"],a:0},
+{q:"Sharing a customer's personal information in a public chatbot is:",o:["Risky and best avoided","Totally fine","Always required","Encouraged"],a:0},
+{q:"At work, for sensitive company data you should:",o:["Use approved tools and follow company rules","Use any free chatbot","Share it freely","Email it to yourself"],a:0},
+{q:"To get a better answer, your request should be:",o:["Clear and specific","As vague as possible","One letter long","Written in code"],a:0},
+{q:"Giving the AI background or context usually:",o:["Helps it give a more useful answer","Confuses it","Costs extra money","Slows your computer"],a:0},
+{q:"If the first answer is not quite right, you can:",o:["Ask a follow-up to refine it","Only start completely over","Give up","Restart your device"],a:0},
+{q:"A helpful thing to tell the AI is:",o:["The format you want (e.g. short, bullet points)","Your password","Nothing at all","Its own name"],a:0},
+{q:"Showing the AI an example of what you want is:",o:["A good way to guide it","Pointless","Against the rules","Impossible"],a:0},
+{q:"'Make it shorter and more formal' is an example of:",o:["Giving the AI clear instructions","A password","A mistake","A web address"],a:0},
+{q:"If the AI misunderstands you, the best move is to:",o:["Rephrase or add more detail","Shout at it","Close the app forever","Blame yourself"],a:0},
+{q:"Which is a good everyday use of AI?",o:["Drafting an email or message","Officially filing your taxes alone","Driving your car","Cooking your dinner"],a:0},
+{q:"AI can help you understand a topic by:",o:["Explaining it in simple terms","Hiding the answer","Charging per word","Only using jargon"],a:0},
+{q:"AI is handy for summarising:",o:["Long articles or documents","Your phone battery","The weather outside","Your fridge"],a:0},
+{q:"AI can help your writing by:",o:["Suggesting drafts and improvements","Guaranteeing perfect facts","Replacing your judgement","Posting letters"],a:0},
+{q:"AI can help you brainstorm by:",o:["Generating lots of ideas to choose from","Making the final decision for you","Reading your mind","Doing nothing"],a:0},
+{q:"AI can help with languages by:",o:["Translating and rewriting text","Teaching you to drive","Booking flights by itself","Nothing useful"],a:0},
+{q:"A good use of AI for studying is:",o:["Asking it to quiz you or explain concepts","Taking your exam for you","Skipping learning","Cheating on tests"],a:0},
+{q:"Can ChatGPT open and read your private files on its own?",o:["No, not unless you give it access","Yes, all of them","Only your photos","Yes, secretly"],a:0},
+{q:"When you move to a new topic, it is often best to:",o:["Start a new chat","Never change topics","Reinstall the app","Pay extra"],a:0},
+{q:"Does AI remember you forever across every chat by default?",o:["No, it usually does not","Yes, everything always","Only your name","Yes, and it calls you"],a:0},
+{q:"AI tools are best thought of as:",o:["Assistants that support you","Replacements for your own thinking","Always-correct oracles","Living beings"],a:0},
+{q:"If two people ask the AI the same creative question, they might get:",o:["Slightly different answers","Exactly identical answers always","An error message","Nothing at all"],a:0},
+{q:"AI does not truly 'understand' like a human; it mainly:",o:["Works with patterns in language","Has real opinions","Feels real emotions","Makes wishes"],a:0},
+{q:"A common myth is that AI is:",o:["Always right and unbiased","Sometimes wrong","A helpful tool","Worth double-checking"],a:0},
+{q:"AI can sometimes reflect:",o:["Biases from the data it learned from","Your current mood","Today's weather","Your location only"],a:0},
+{q:"Is there a free way to use tools like ChatGPT?",o:["Yes, free versions exist","No, never","Only for big companies","Only with a printer"],a:0},
+{q:"Paid AI plans for individuals typically cost around:",o:["$20 a month for the popular tier","$5,000 a month","Nothing, ever","$1 for every word"],a:0},
+{q:"ChatGPT, Claude and Gemini are:",o:["Different AI assistant tools","The same single app","Search engines only","Email apps"],a:0},
+{q:"A 'copilot'-style AI usually means:",o:["AI built into an app you already use","A second computer screen","A type of keyboard","A printer"],a:0},
+{q:"You can use most AI assistants on:",o:["Your phone or computer","Only a special machine","Only at the office","Only when offline"],a:0},
+{q:"A reasonable reason to pay for AI is:",o:["You use it a lot and want fewer limits","It is the only option","Free versions have no features at all","To get a brand-new phone"],a:0},
+{q:"If AI writes something that seems biased or unfair, you should:",o:["Use your judgement and not just trust it","Post it anyway","Assume it is official","Ignore the issue"],a:0},
+{q:"The best way to learn what AI is good at is to:",o:["Try it on small, low-risk tasks","Use it for the most important thing first","Never try it","Only read about it"],a:0},
+{q:"AI can help you reply to a message by:",o:["Drafting a response you then edit","Sending it without you","Reading the sender's mind","Phoning them"],a:0},
+{q:"If you do not understand AI's answer, you can ask it to:",o:["Explain it more simply","Give up","Use harder words","Charge you more"],a:0},
+{q:"Using a polite tone with AI is:",o:["Optional — clear instructions matter more","Required by law","The only way it works","Never allowed"],a:0},
+{q:"Should you rely on AI alone for a big life decision?",o:["No — use it as input, not the decider","Yes, always","Only for fun","Let it decide for you"],a:0},
+{q:"AI-generated images or text should be:",o:["Reviewed before you rely on or share them","Posted instantly","Always fully trusted","Never checked"],a:0},
+{q:"If AI claims it can do something it clearly cannot (like phone someone), you should:",o:["Be skeptical","Believe it fully","Get angry","Pay more money"],a:0},
+{q:"A good way to fact-check AI is to:",o:["Look at a trusted source","Only ask the same AI to confirm","Assume it is fine","Just guess"],a:0},
+{q:"The phrase 'AI assistant' suggests it should:",o:["Assist you, while you stay in control","Take over completely","Replace your job","Make all your choices"],a:0},
+{q:"When AI genuinely does not know something, a good answer would be that it:",o:["Admits it is unsure","Makes up a confident answer","Crashes","Charges you"],a:0},
+{q:"You can improve AI's answer by giving it:",o:["More context about what you need","Less information","Only one word","Your password"],a:0},
+{q:"If a task involves money or contracts, the safest step is to:",o:["Have a human double-check it","Let AI finalise it alone","Skip the review","Trust it blindly"],a:0},
+{q:"AI is most reliable for:",o:["Drafting, summarising and explaining","Guaranteeing facts","Predicting the future","Making your decisions"],a:0},
+{q:"The simplest way to protect yourself when using AI is to:",o:["Verify important things and protect private data","Trust everything it says","Share everything with it","Avoid reading its replies"],a:0},
+{q:"Can AI replace seeing a doctor for a health concern?",o:["No","Yes","Only for surgery","Only for a cold"],a:0},
+{q:"If you paste a long document and ask for a summary, AI will:",o:["Try to summarise the key points","Always refuse","Email it for you","Delete it"],a:0},
+{q:"AI tools learn from:",o:["Large amounts of text and data","Your webcam","Your contact list","Live phone calls"],a:0},
+{q:"A safe assumption about anything you type into a public AI is that:",o:["It may not be fully private","It is encrypted forever","It is deleted instantly","No one could ever see it"],a:0},
+{q:"A good first step with a new AI tool is to:",o:["Learn what it can and cannot do","Enter your bank details","Trust it blindly","Avoid it completely"],a:0},
+{q:"If AI gives two different answers on two tries, that is:",o:["Normal for creative questions","A serious error","A virus","Impossible"],a:0},
+{q:"A good prompt for an email might include:",o:["Who it is to and what you want to say","Your password","The AI's age","Nothing"],a:0},
+{q:"AI is a helpful starting point for:",o:["A first draft you then improve","The final word on facts","Legal rulings","Medical diagnoses"],a:0},
+{q:"To get a shorter answer, you can simply:",o:["Ask for a shorter answer","Pay more","Restart the app","Use caps lock"],a:0},
+{q:"If AI's tone is too formal, you can ask it to be:",o:["More casual or friendly","Angrier","Completely silent","Encrypted"],a:0},
+{q:"AI can help people writing in a second language by:",o:["Improving grammar and clarity","Changing their identity","Doing nothing","Hiding all mistakes"],a:0},
+{q:"Which is true about AI and creativity?",o:["It can suggest ideas, but you choose","It has true human imagination","It owns your ideas","It refuses to help"],a:0},
+{q:"If you share confidential work information with a public chatbot, the risk is that it:",o:["Could be exposed","Has no risk at all","Gets safely deleted","Is required"],a:0},
+{q:"A realistic expectation of AI is that it:",o:["Speeds up work but needs checking","Does everything perfectly","Never helps","Fully replaces you"],a:0},
+{q:"AI can help you plan by:",o:["Drafting a checklist or outline","Booking everything itself","Paying your bills","Driving you there"],a:0},
+{q:"When AI is unsure, the responsible thing for you to do is:",o:["Verify before acting","Act immediately","Ignore it","Trust it blindly"],a:0},
+{q:"The main reason to keep private data out of AI chats is:",o:["Privacy and security","It is slower","It costs more","It is boring"],a:0},
+{q:"AI assistants are available as:",o:["Apps and websites","Only physical robots","Only on televisions","Only inside cars"],a:0},
+{q:"A good use of AI at work is to:",o:["Draft and summarise, then review it","Make final decisions alone","Share all company data","Skip all checks"],a:0},
+{q:"If AI writes code or step-by-step instructions, you should:",o:["Test or review them before using","Run them blindly","Trust them completely","Ignore any errors"],a:0},
+{q:"AI cannot reliably:",o:["Predict the future or guarantee facts","Help draft text","Explain ideas","Summarise documents"],a:0},
+{q:"The smartest way to use AI is as:",o:["A capable assistant you guide and check","An all-knowing oracle","A replacement for thinking","A toy only"],a:0},
+{q:"If AI suggests something that feels wrong, you should:",o:["Trust your judgement and verify","Do it anyway","Assume you must be wrong","Pay for more"],a:0},
+{q:"A free AI plan is good for:",o:["Trying things out and light use","Heavy business use only","Nothing","Printing"],a:0},
+{q:"Which is a sign to slow down and check an answer?",o:["A bold claim with no source","A hedged 'maybe'","A short reply","A friendly greeting"],a:0},
+{q:"AI works best when your request is:",o:["Specific and clear","One vague word","Completely empty","In secret code"],a:0},
+{q:"The everyday rule with AI facts is:",o:["Trust, but verify","Always fully trust","Never use them","Memorise them"],a:0},
+{q:"AI can help summarise a meeting if:",o:["You give it the notes or transcript","It joins the call by itself","It reads everyone's mind","It cannot, ever"],a:0},
+{q:"The output of an AI is best treated as a:",o:["Draft to refine","Final legal document","Guaranteed truth","Signed contract"],a:0},
+{q:"If you want sources from AI, you should:",o:["Ask for them, then check they are real","Assume they are real","Skip them","Trust them blindly"],a:0},
+{q:"AI does not have:",o:["Real understanding or feelings","The ability to draft text","Any usefulness","Access to language patterns"],a:0},
+{q:"A balanced view of AI is that it is:",o:["Powerful and useful, but not perfect","Always right","Always wrong","Completely useless"],a:0},
+{q:"The best protection against AI mistakes is:",o:["Your own review and common sense","More speed","More blind trust","Less reading"],a:0},
+{q:"When in doubt about an AI answer, the safe move is to:",o:["Check a reliable source","Just believe it","Share it widely","Forget about it"],a:0},
+{q:"The single most important everyday habit with AI is to:",o:["Verify important info and protect your privacy","Trust everything","Share everything","Avoid AI completely"],a:0},
+{q:"AI chat replies are generated:",o:["Fresh, based on your message","Pulled from a fixed list of answers","By a person typing live","From your saved files"],a:0},
+{q:"If something an AI says could affect your safety or money, you should:",o:["Confirm it with a trusted source or person","Act on it right away","Ignore the risk","Assume it is fine"],a:0},
+{q:"A simple way to get better results over time is to:",o:["Notice what works and adjust your requests","Always type the same thing","Never change anything","Stop using it"],a:0},
+{q:"Which statement is the healthiest attitude to AI?",o:["It is a useful helper that I double-check","It is never useful","It is always right","It can fully replace me"],a:0}
+];
+
+const MATCH=[
+{q:"Match each everyday task to how AI can help.",p:[["A long article","Summarise it"],["A rough email","Polish the wording"],["A new language","Translate the text"],["A tricky topic","Explain it simply"]]},
+{q:"Match each good AI habit to why it matters.",p:[["Verify facts","AI can be wrong"],["Protect private data","Chats may not be private"],["Review before sending","You are responsible"],["Be specific","You get better answers"]]},
+{q:"Match each word to its plain meaning.",p:[["Hallucination","Making something up"],["Prompt","Your request to the AI"],["AI assistant","A helper you guide"],["Chatbot","A tool you chat with"]]},
+{q:"Match each item to what it is.",p:[["ChatGPT","An AI assistant"],["Gemini","An AI assistant"],["Copilot","AI inside your apps"],["Free plan","A no-cost way to try AI"]]},
+{q:"Match each situation to the safe action.",p:[["A health worry","See a professional"],["A big money decision","Get a human to check"],["Sensitive data","Keep it out of public chat"],["An answer you are unsure of","Verify it"]]},
+{q:"Match each vague request to a clearer version.",p:[["'Write something'","'Write a short thank-you email'"],["'Make it better'","'Make it shorter and friendlier'"],["'Explain'","'Explain it simply for a beginner'"],["'Help'","'Help me reply to this message'"]]},
+{q:"Match each task to how far you can trust the AI.",p:[["Drafting an email","Trust it as a draft"],["A medical decision","Do not rely on it alone"],["Summarising notes","Helpful, then check"],["Guaranteeing a fact","Always verify"]]},
+{q:"Match each common myth to the reality.",p:[["'AI is always right'","It can be wrong"],["'AI is fully private'","Chats may help improve it"],["'AI thinks like us'","It works with patterns"],["'AI knows today's news'","It may be out of date"]]},
+{q:"Match each goal to the simple tip.",p:[["A shorter answer","Ask for it shorter"],["A friendlier tone","Ask it to be casual"],["More detail","Give it more context"],["A specific format","Ask for bullet points"]]},
+{q:"Match each use to whether it is okay.",p:[["Draft a personal email","Fine for AI"],["Share a password","Never"],["Summarise a public article","Fine for AI"],["Paste a client's private data","Avoid it"]]},
+{q:"Match each term to plain English.",p:[["Free version","No cost, with limits"],["Paid plan","Around $20 a month"],["Hallucinate","Make something up"],["Follow-up","Asking again to refine"]]},
+{q:"Match who should do each part.",p:[["Generate a first draft","AI"],["Decide what to send","You"],["Check the facts","You"],["Suggest some ideas","AI"]]}
+];
+
+/* ===================== Engine ===================== */
+const NUM_MCQ=44, NUM_MATCH=6, TOTAL=50, PASS_PCT=70;
+const COURSE_TITLE="AI Basics for Everyday Users";
+let USERNAME="", ATTEMPT=[], ANSWERS={}, CURRENT=0, CERT_ID="";
+
+function shuffle(a){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=x[i];x[i]=x[j];x[j]=t;}return x;}
+function sample(a,n){return shuffle(a).slice(0,Math.min(n,a.length));}
+
+function buildAttempt(){
+  const mcq=sample(MCQ,NUM_MCQ).map(q=>{
+    const correct=q.o[q.a];
+    return {type:"mcq",q:q.q,opts:shuffle(q.o.slice()),correct:correct};
+  });
+  const match=sample(MATCH,NUM_MATCH).map(q=>{
+    const lefts=q.p.map(p=>p[0]);
+    const rights=shuffle(q.p.map(p=>p[1]));
+    const correct={};q.p.forEach(p=>correct[p[0]]=p[1]);
+    return {type:"match",q:q.q,lefts:lefts,rights:rights,correct:correct};
+  });
+  ATTEMPT=shuffle(mcq.concat(match));
+  ANSWERS={};CURRENT=0;
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'auto'});
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+const nameInput=document.getElementById('nameInput'),nameErr=document.getElementById('nameErr');
+function goInstructions(){
+  const v=nameInput.value.trim().replace(/\s+/g,' ');
+  if(v.length<2){nameErr.classList.add('show');nameInput.focus();return;}
+  nameErr.classList.remove('show');
+  USERNAME=v;
+  document.getElementById('greetLine').textContent='All set, '+USERNAME.split(' ')[0]+'. Here\u2019s how the quiz works.';
+  showScreen('screenInstructions');
+}
+document.getElementById('toInstructions').addEventListener('click',goInstructions);
+nameInput.addEventListener('keydown',e=>{if(e.key==='Enter')goInstructions();});
+nameInput.addEventListener('input',()=>nameErr.classList.remove('show'));
+
+document.getElementById('backToWelcome').addEventListener('click',()=>showScreen('screenWelcome'));
+document.getElementById('startQuiz').addEventListener('click',()=>{buildAttempt();startQuiz();});
+
+const qBody=document.getElementById('qBody'),qCount=document.getElementById('qCount'),qBar=document.getElementById('qBar'),qWho=document.getElementById('qWho');
+const qBack=document.getElementById('qBack'),qNext=document.getElementById('qNext'),progressBar=document.getElementById('progress');
+function startQuiz(){qWho.textContent=USERNAME;showScreen('screenQuiz');renderQuestion();}
+function renderQuestion(){
+  const item=ATTEMPT[CURRENT];
+  qCount.textContent='Question '+(CURRENT+1)+' of '+TOTAL;
+  const pct=Math.round(((CURRENT+1)/TOTAL)*100);
+  qBar.style.width=pct+'%';progressBar.style.width=pct+'%';
+  let html='';
+  if(item.type==='mcq'){
+    html+='<span class="q-type">Multiple choice</span>';
+    html+='<p class="q-stem">'+esc(item.q)+'</p>';
+    const letters=['A','B','C','D','E','F'];
+    item.opts.forEach((o,i)=>{
+      const sel=ANSWERS[CURRENT]===o?' selected':'';
+      html+='<button class="opt'+sel+'" data-val="'+esc(o)+'"><span class="mk">'+letters[i]+'</span>'+esc(o)+'</button>';
+    });
+  }else{
+    html+='<span class="q-type match">Match the following</span>';
+    html+='<p class="q-stem">'+esc(item.q)+'</p>';
+    html+='<p class="match-hint">Choose the matching option for every row. All rows must be correct to score the point.</p>';
+    const cur=ANSWERS[CURRENT]||{};
+    item.lefts.forEach((L)=>{
+      let opts='<option value="">— choose —</option>';
+      item.rights.forEach(R=>{opts+='<option value="'+esc(R)+'"'+(cur[L]===R?' selected':'')+'>'+esc(R)+'</option>';});
+      const set=cur[L]?' set':'';
+      html+='<div class="match-row"><div class="ml">'+esc(L)+'</div><select class="msel'+set+'" data-left="'+esc(L)+'">'+opts+'</select></div>';
+    });
+  }
+  qBody.innerHTML=html;
+  if(item.type==='mcq'){
+    qBody.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{
+      ANSWERS[CURRENT]=b.dataset.val;
+      qBody.querySelectorAll('.opt').forEach(x=>x.classList.toggle('selected',x===b));
+    }));
+  }else{
+    qBody.querySelectorAll('.msel').forEach(sel=>sel.addEventListener('change',()=>{
+      if(!ANSWERS[CURRENT])ANSWERS[CURRENT]={};
+      ANSWERS[CURRENT][sel.dataset.left]=sel.value;
+      sel.classList.toggle('set',!!sel.value);
+    }));
+  }
+  qBack.disabled=CURRENT===0;
+  qNext.textContent=CURRENT===TOTAL-1?'Submit quiz':'Next →';
+}
+qBack.addEventListener('click',()=>{if(CURRENT>0){CURRENT--;renderQuestion();}});
+qNext.addEventListener('click',()=>{
+  if(CURRENT<TOTAL-1){CURRENT++;renderQuestion();}
+  else{
+    const unanswered=countUnanswered();
+    if(unanswered>0 && !confirm(unanswered+' question'+(unanswered>1?'s are':' is')+' unanswered and will be marked incorrect. Submit anyway?'))return;
+    submitQuiz();
+  }
+});
+function countUnanswered(){
+  let n=0;
+  ATTEMPT.forEach((it,i)=>{
+    if(it.type==='mcq'){if(!ANSWERS[i])n++;}
+    else{const a=ANSWERS[i]||{};if(it.lefts.some(L=>!a[L]))n++;}
+  });
+  return n;
+}
+function gradeItem(it,a){
+  if(it.type==='mcq')return a===it.correct;
+  if(!a)return false;
+  return it.lefts.every(L=>a[L]===it.correct[L]);
+}
+
+function submitQuiz(){
+  let correct=0;
+  ATTEMPT.forEach((it,i)=>{if(gradeItem(it,ANSWERS[i]))correct++;});
+  const pct=Math.round((correct/TOTAL)*100);
+  const passed=pct>=PASS_PCT;
+  const badge=document.getElementById('resBadge'),score=document.getElementById('resScore'),sub=document.getElementById('resSub');
+  score.textContent=pct+'%';
+  sub.textContent='You scored '+correct+' of '+TOTAL+'.   (Pass mark: '+PASS_PCT+'%)';
+  badge.className='result-badge '+(passed?'pass':'fail');
+  badge.textContent=passed?'✓ Passed — well done':'Not passed yet';
+  const certWrap=document.getElementById('certWrap');
+  if(passed){
+    CERT_ID='SOLV-AIP-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*1000000)+1).padStart(6,'0');
+    drawCertificate(USERNAME,pct,prettyDate());
+    certWrap.style.display='block';
+  }else{certWrap.style.display='none';}
+  buildReview();
+  document.getElementById('review').classList.remove('show');
+  document.getElementById('reviewToggle').textContent='Review answers';
+  progressBar.style.width='100%';
+  showScreen('screenResult');
+}
+function buildReview(){
+  const list=document.getElementById('reviewList');
+  list.innerHTML=ATTEMPT.map((it,i)=>{
+    const ok=gradeItem(it,ANSWERS[i]);
+    let body='';
+    if(it.type==='mcq'){
+      const your=ANSWERS[i]||'(no answer)';
+      body='<div class="ra">Your answer: <span class="you">'+esc(your)+'</span></div>';
+      if(!ok)body+='<div class="ra">Correct: <span class="corr">'+esc(it.correct)+'</span></div>';
+    }else{
+      if(ok){body='<div class="ra">All rows matched correctly.</div>';}
+      else{
+        body='<div class="ra">Correct matches:</div>';
+        it.lefts.forEach(L=>{body+='<div class="ra">• '+esc(L)+' → <span class="corr">'+esc(it.correct[L])+'</span></div>';});
+      }
+    }
+    return '<div class="rev-item'+(ok?'':' wrong')+'"><div class="rq">'+(i+1)+'. '+esc(it.q)+'</div>'+body+'</div>';
+  }).join('');
+}
+document.getElementById('reviewToggle').addEventListener('click',function(){
+  const r=document.getElementById('review');const open=r.classList.toggle('show');
+  this.textContent=open?'Hide answers':'Review answers';
+  if(open)r.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('retake').addEventListener('click',()=>{buildAttempt();startQuiz();});
+document.getElementById('startOver').addEventListener('click',()=>{nameInput.value=USERNAME;showScreen('screenWelcome');});
+
+function prettyDate(){const d=new Date();const m=['January','February','March','April','May','June','July','August','September','October','November','December'];return d.getDate()+' '+m[d.getMonth()]+' '+d.getFullYear();}
+function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function drawSeal(ctx,x,y,r){
+  ctx.save();
+  ctx.strokeStyle='#9A4F2F';ctx.lineWidth=5;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.stroke();
+  ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,r-10,0,Math.PI*2);ctx.stroke();
+  ctx.fillStyle='#1F1B2D';ctx.beginPath();ctx.arc(x,y,r-22,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#ffffff';ctx.lineWidth=6;ctx.lineCap='round';ctx.lineJoin='round';
+  ctx.beginPath();ctx.moveTo(x-17,y+1);ctx.lineTo(x-4,y+14);ctx.lineTo(x+19,y-13);ctx.stroke();
+  ctx.restore();
+}
+function drawCertificate(name,pct,dateStr){
+  const c=document.getElementById('certCanvas'),ctx=c.getContext('2d');
+  const W=1600,H=1131;c.width=W;c.height=H;
+  ctx.fillStyle='#FAF7F2';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='#1F1B2D';ctx.lineWidth=10;roundRect(ctx,42,42,W-84,H-84,20);ctx.stroke();
+  ctx.strokeStyle='#9A4F2F';ctx.lineWidth=2;roundRect(ctx,64,64,W-128,H-128,14);ctx.stroke();
+  ctx.textAlign='center';ctx.textBaseline='alphabetic';
+  ctx.fillStyle='#9A4F2F';ctx.font='700 22px Arial';
+  ctx.fillText('S O L V A N T A   C O N S U L T I N G',W/2,142);
+  ctx.fillStyle='#1F1B2D';ctx.font='700 64px Georgia, "Times New Roman", serif';
+  ctx.fillText('Certificate of Completion',W/2,228);
+  ctx.strokeStyle='#9A4F2F';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(W/2-90,258);ctx.lineTo(W/2+90,258);ctx.stroke();
+  ctx.fillStyle='#6F6A7A';ctx.font='400 26px Arial';ctx.fillText('This certifies that',W/2,332);
+  ctx.fillStyle='#1F1B2D';let fs=78;ctx.font='700 '+fs+'px Georgia, "Times New Roman", serif';
+  while(ctx.measureText(name).width>W-360&&fs>32){fs-=2;ctx.font='700 '+fs+'px Georgia, "Times New Roman", serif';}
+  ctx.fillText(name,W/2,420);
+  const uw=Math.min(ctx.measureText(name).width+90,W-280);
+  ctx.strokeStyle='#DED1C4';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W/2-uw/2,448);ctx.lineTo(W/2+uw/2,448);ctx.stroke();
+  ctx.fillStyle='#6F6A7A';ctx.font='400 26px Arial';ctx.fillText('has successfully completed the course',W/2,505);
+  ctx.fillStyle='#9A4F2F';ctx.font='700 42px Arial';ctx.fillText(COURSE_TITLE,W/2,560);
+  ctx.fillStyle='#1F1B2D';ctx.font='700 28px Arial';ctx.fillText('Final score: '+pct+'%   \u00B7   Passed',W/2,632);
+  ctx.fillStyle='#6F6A7A';ctx.font='400 24px Arial';ctx.fillText('Completed on '+dateStr,W/2,672);
+  drawSeal(ctx,W/2,772,62);
+  ctx.fillStyle='#1F1B2D';ctx.font='italic 700 34px Georgia, "Times New Roman", serif';ctx.fillText('Solvanta Consulting',W/2,902);
+  ctx.strokeStyle='#1F1B2D';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W/2-150,922);ctx.lineTo(W/2+150,922);ctx.stroke();
+  ctx.fillStyle='#6F6A7A';ctx.font='700 15px Arial';ctx.fillText('A I   B A S I C S   F O R   E V E R Y D A Y   U S E R S',W/2,948);
+  ctx.fillStyle='#8B8177';ctx.font='400 15px Arial';
+  ctx.fillText('This is a certificate of course completion for personal learning. It is not an official, accredited,',W/2,1004);
+  ctx.fillText('or professionally recognised qualification.',W/2,1026);
+  ctx.fillStyle='#6F6A7A';ctx.font='700 14px Consolas, monospace';
+  ctx.fillText('Certificate ID: '+CERT_ID,W/2,1052);
+}
+document.getElementById('downloadCert').addEventListener('click',()=>{
+  const c=document.getElementById('certCanvas');
+  const safe=USERNAME.replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'')||'certificate';
+  const a=document.createElement('a');a.download='AI-Basics-Certificate-'+safe+'.png';a.href=c.toDataURL('image/png');
+  document.body.appendChild(a);a.click();a.remove();
+});
+
+buildAttempt();
+nameInput.focus();
+</script>
 </body>
 </html>
