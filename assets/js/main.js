@@ -5,7 +5,7 @@
 
 loadResponsivePolish();
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   initBrandLogo();
   initPrimaryNavigation();
   initFooterNavigation();
@@ -20,12 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {
 ----------------------------- */
 
 function loadResponsivePolish() {
-  const href = "/assets/css/responsive-polish.css?v=4";
+  const href = '/assets/css/responsive-polish.css?v=4';
 
-  if (document.querySelector(`link[href="${href}"]`)) return;
+  if (document.querySelector(`link[href='${href}']`)) return;
 
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
   link.href = href;
   document.head.appendChild(link);
 }
@@ -35,15 +35,15 @@ function loadResponsivePolish() {
 ----------------------------- */
 
 function initBrandLogo() {
-  const brandLinks = document.querySelectorAll(".brand-link");
+  const brandLinks = document.querySelectorAll('.brand-link');
 
   brandLinks.forEach((brandLink) => {
-    const brandMark = brandLink.querySelector(".brand-mark");
+    const brandMark = brandLink.querySelector('.brand-mark');
     if (!brandMark) return;
 
-    brandMark.classList.add("brand-mark-primary");
-    brandLink.classList.add("has-primary-logo");
-    brandMark.innerHTML = '<img class="brand-logo-primary" src="/assets/img/logo-primary.svg" alt="" width="180" height="67" />';
+    brandMark.classList.add('brand-mark-primary');
+    brandLink.classList.add('has-primary-logo');
+    brandMark.innerHTML = '<img class=\'brand-logo-primary\' src=\'/assets/img/logo-primary.svg\' alt=\'\' width=\'180\' height=\'67\' />';
   });
 }
 
@@ -52,18 +52,18 @@ function initBrandLogo() {
 ----------------------------- */
 
 function initPrimaryNavigation() {
-  const navMenus = document.querySelectorAll("[data-nav-menu]");
+  const navMenus = document.querySelectorAll('[data-nav-menu]');
   const links = [
-    { href: "/", label: "Home" },
-    { href: "/courses/", label: "Courses" },
-    { href: "/about/", label: "About" },
-    { href: "/contact/", label: "Contact" },
+    { href: '/', label: 'Home' },
+    { href: '/courses/', label: 'Courses' },
+    { href: '/about/', label: 'About' },
+    { href: '/contact/', label: 'Contact' },
   ];
 
   navMenus.forEach((navMenu) => {
     navMenu.innerHTML = links
-      .map((link) => `<a href="${link.href}">${link.label}</a>`)
-      .join("");
+      .map((link) => `<a href='${link.href}'>${link.label}</a>`)
+      .join('');
   });
 }
 
@@ -72,30 +72,30 @@ function initPrimaryNavigation() {
 ----------------------------- */
 
 function initFooterNavigation() {
-  const footerLayout = document.querySelector(".site-footer .footer-layout");
+  const footerLayout = document.querySelector('.site-footer .footer-layout');
   if (!footerLayout) return;
 
   footerLayout.innerHTML = `
-    <div class="footer-brand">
-      <p class="footer-title">Solvanta Consulting</p>
-      <p class="muted">Free practical learning resources, with certificates only where they fit the course.</p>
+    <div class='footer-brand'>
+      <p class='footer-title'>Solvanta Consulting</p>
+      <p class='muted'>Free practical learning resources, with certificates only where they fit the course.</p>
     </div>
     <div>
       <h3>Site</h3>
-      <nav class="footer-links" aria-label="Footer site links">
-        <a data-footer-link href="/courses/">Courses</a>
-        <a data-footer-link href="/about/">About</a>
-        <a data-footer-link href="/contact/">Contact</a>
-        <a data-footer-link href="/verify/">Certificate lookup</a>
+      <nav class='footer-links' aria-label='Footer site links'>
+        <a data-footer-link href='/courses/'>Courses</a>
+        <a data-footer-link href='/about/'>About</a>
+        <a data-footer-link href='/contact/'>Contact</a>
+        <a data-footer-link href='/verify/'>Certificate lookup</a>
       </nav>
     </div>
     <div>
       <h3>Policies</h3>
-      <nav class="footer-links" aria-label="Footer policy links">
-        <a data-footer-link href="/privacy-policy/">Privacy Policy</a>
-        <a data-footer-link href="/terms/">Terms of Use</a>
-        <a data-footer-link href="/certificate-policy/">Certificate Policy</a>
-        <a data-footer-link href="/data-deletion/">Data Deletion</a>
+      <nav class='footer-links' aria-label='Footer policy links'>
+        <a data-footer-link href='/privacy-policy/'>Privacy Policy</a>
+        <a data-footer-link href='/terms/'>Terms of Use</a>
+        <a data-footer-link href='/certificate-policy/'>Certificate Policy</a>
+        <a data-footer-link href='/data-deletion/'>Data Deletion</a>
       </nav>
     </div>
   `;
@@ -106,45 +106,45 @@ function initFooterNavigation() {
 ----------------------------- */
 
 function initMobileNavigation() {
-  const navToggle = document.querySelector("[data-nav-toggle]");
-  const navMenu = document.querySelector("[data-nav-menu]");
+  const navToggle = document.querySelector('[data-nav-toggle]');
+  const navMenu = document.querySelector('[data-nav-menu]');
 
   if (!navToggle || !navMenu) return;
 
-  navToggle.addEventListener("click", () => {
-    const isOpen = navMenu.classList.toggle("open");
+  navToggle.addEventListener('click', () => {
+    const isOpen = navMenu.classList.toggle('open');
 
-    navToggle.setAttribute("aria-expanded", String(isOpen));
+    navToggle.setAttribute('aria-expanded', String(isOpen));
     navToggle.setAttribute(
-      "aria-label",
-      isOpen ? "Close navigation menu" : "Open navigation menu"
+      'aria-label',
+      isOpen ? 'Close navigation menu' : 'Open navigation menu'
     );
   });
 
-  navMenu.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navMenu.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
-      navToggle.setAttribute("aria-label", "Open navigation menu");
+  navMenu.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Open navigation menu');
     });
   });
 
-  document.addEventListener("click", (event) => {
+  document.addEventListener('click', (event) => {
     const clickedInsideMenu = navMenu.contains(event.target);
     const clickedToggle = navToggle.contains(event.target);
 
-    if (!clickedInsideMenu && !clickedToggle && navMenu.classList.contains("open")) {
-      navMenu.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
-      navToggle.setAttribute("aria-label", "Open navigation menu");
+    if (!clickedInsideMenu && !clickedToggle && navMenu.classList.contains('open')) {
+      navMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Open navigation menu');
     }
   });
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && navMenu.classList.contains("open")) {
-      navMenu.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
-      navToggle.setAttribute("aria-label", "Open navigation menu");
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && navMenu.classList.contains('open')) {
+      navMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Open navigation menu');
       navToggle.focus();
     }
   });
@@ -156,28 +156,31 @@ function initMobileNavigation() {
 
 function initActiveNavigation() {
   const currentPath = normalizePath(window.location.pathname);
-  const navLinks = document.querySelectorAll("[data-nav-menu] a, [data-footer-link]");
+  const navLinks = document.querySelectorAll('[data-nav-menu] a, [data-footer-link]');
 
   navLinks.forEach((link) => {
     const linkPath = normalizePath(new URL(link.href, window.location.origin).pathname);
+    const isHome = linkPath === '/';
+    const isExactMatch = linkPath === currentPath;
+    const isSectionMatch = !isHome && currentPath.startsWith(`${linkPath}/`);
 
-    if (linkPath === currentPath) {
-      link.classList.add("active");
-      link.setAttribute("aria-current", "page");
+    if (isExactMatch || isSectionMatch) {
+      link.classList.add('active');
+      link.setAttribute('aria-current', isExactMatch ? 'page' : 'true');
     }
   });
 }
 
 function normalizePath(path) {
-  if (!path) return "/";
+  if (!path) return '/';
 
   let normalized = path.trim();
 
-  if (!normalized.startsWith("/")) {
+  if (!normalized.startsWith('/')) {
     normalized = `/${normalized}`;
   }
 
-  if (normalized.length > 1 && normalized.endsWith("/")) {
+  if (normalized.length > 1 && normalized.endsWith('/')) {
     normalized = normalized.slice(0, -1);
   }
 
@@ -189,7 +192,7 @@ function normalizePath(path) {
 ----------------------------- */
 
 function initCurrentYear() {
-  const yearElements = document.querySelectorAll("[data-current-year]");
+  const yearElements = document.querySelectorAll('[data-current-year]');
   const year = new Date().getFullYear();
 
   yearElements.forEach((element) => {
@@ -202,14 +205,14 @@ function initCurrentYear() {
 ----------------------------- */
 
 function initExternalLinks() {
-  const links = document.querySelectorAll('a[href^="http"]');
+  const links = document.querySelectorAll('a[href^=http]');
 
   links.forEach((link) => {
     const url = new URL(link.href);
 
     if (url.hostname !== window.location.hostname) {
-      link.setAttribute("target", "_blank");
-      link.setAttribute("rel", "noopener noreferrer");
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
     }
   });
 }
